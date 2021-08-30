@@ -5,24 +5,40 @@ export const navItems: INavData[] = [
     name: "Dashboard",
     url: "/dashboard",
     icon: "icon-speedometer",
-    badge: {
-      variant: "info",
-      text: "NEW",
-    },
   },
   {
     title: true,
-    name: "Theme",
+    name: "Danh mục quản lý",
   },
   {
-    name: "Colors",
-    url: "/theme/colors",
-    icon: "icon-drop",
+    name: "Quản lý người dùng",
+    url: "/theme/user",
+    icon: "icon-people",
   },
   {
-    name: "Typography",
-    url: "/theme/typography",
-    icon: "icon-pencil",
+    name: "Quản lý danh mục",
+    url: "/theme/category",
+    icon: "icon-list",
+  },
+  {
+    name: "Quản lý sản phẩm",
+    url: "/theme/product",
+    icon: "icon-diamond",
+  },
+  {
+    name: "Quản lý thông báo",
+    url: "/theme/notification",
+    icon: "icon-bell",
+  },
+  {
+    name: "Quản lý đơn hàng",
+    url: "/theme/order",
+    icon: "icon-basket",
+  },
+  {
+    name: "Quản lý gian hàng",
+    url: "/theme/product-list",
+    icon: "icon-folder-alt",
   },
   {
     title: true,
@@ -231,20 +247,5 @@ export const navItems: INavData[] = [
       text: "NEW",
     },
     attributes: { disabled: true },
-  },
-  {
-    name: "Download CoreUI",
-    url: "http://coreui.io/angular/",
-    icon: "icon-cloud-download",
-    class: "mt-auto",
-    variant: "success",
-    attributes: { target: "_blank", rel: "noopener" },
-  },
-  {
-    name: "Try CoreUI PRO",
-    url: "http://coreui.io/pro/angular/",
-    icon: "icon-layers",
-    variant: "danger",
-    attributes: { target: "_blank", rel: "noopener" },
   },
 ];
