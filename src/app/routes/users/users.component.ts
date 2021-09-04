@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-users',
@@ -6,7 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+  usersForm!: FormGroup;
+  constructor(private fb: FormBuilder) {}
+  q = {
+    username: '',
+    email: '',
+    phone: '',
+  };
+  ngOnInit(): void {
+    this.usersForm = this.fb.group({
+      username: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
+    });
+  }
 }
