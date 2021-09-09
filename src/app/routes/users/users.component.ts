@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UsersService } from './users.service';
 
 @Component({
   selector: 'app-users',
@@ -8,7 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class UsersComponent implements OnInit {
   usersForm!: FormGroup;
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder,private usersService: UsersService) {}
   q = {
     username: '',
     email: '',
@@ -20,5 +21,9 @@ export class UsersComponent implements OnInit {
       email: ['', [Validators.required]],
       phone: ['', [Validators.required]],
     });
+
+    this.usersService.getUserList().subscribe(res =>{
+      console.log(res);
+    });;
   }
 }
