@@ -7,10 +7,6 @@ export const environment = {
   baseUrl: '',
   useHash: false,
   hmr: false,
-  serverUrl: {
-    // url server
-    api:      'http://202.92.6.183:8080/api',
-  },
 };
 
 /*
