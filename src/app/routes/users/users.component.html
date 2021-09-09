@@ -14,28 +14,25 @@
         </mat-form-field>
         <mat-form-field class="m-r-8">
           <input
-            matInput
-            placeholder="Số điện thoại"
-            formControlName="phone"
-            name="phone"
-            type="number"
-          />
+                 matInput
+                 placeholder="Số điện thoại"
+                 formControlName="phone"
+                 name="phone" />
         </mat-form-field>
-        <button mat-raised-button color="primary">Tìm kiếm</button>
+        <button mat-raised-button color="primary" (click)="search()">Tìm kiếm</button>
       </form>
     </mat-card>
     <mat-card>
       <mtx-grid
-        [data]="list"
-        [columns]="columns"
-        [length]="total"
-        [loading]="isLoading"
-        [pageOnFront]="false"
-        [pageIndex]="query.page"
-        [pageSize]="query.per_page"
-        [pageSizeOptions]="[5, 10, 20]"
-        (page)="getNextPage($event)"
-      >
+                [data]="list"
+                [columns]="columns"
+                [length]="total"
+                [loading]="isLoading"
+                [pageOnFront]="false"
+                [pageIndex]="query.page"
+                [pageSize]="query.size"
+                [pageSizeOptions]="[5, 10, 20]"
+                (page)="getNextPage($event)">
       </mtx-grid>
     </mat-card>
   </div>

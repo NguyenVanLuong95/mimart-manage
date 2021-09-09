@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from './users.service';
 import { MtxGridColumn } from '@ng-matero/extensions';
 import { PageEvent } from '@angular/material/paginator';
@@ -15,11 +15,8 @@ export class UsersComponent implements OnInit {
   total = 0;
   isLoading = true;
   query = {
-    q: 'user:nzbin',
-    sort: 'stars',
-    order: 'desc',
     page: 0,
-    per_page: 10,
+    size: 10,
   };
   columns: MtxGridColumn[] = [
     { header: 'Họ tên', field: 'userName' },
@@ -28,28 +25,47 @@ export class UsersComponent implements OnInit {
     { header: 'Vai trò', field: 'roleId', type: 'number' },
     { header: 'Trạng thái', field: 'isActive', type: 'boolean' },
   ];
-  constructor(private fb: FormBuilder, private serviceUsers: UsersService) {}
+  constructor(private fb: FormBuilder, private serviceUsers: UsersService, private cdr: ChangeDetectorRef) { }
   ngOnInit(): void {
     this.usersForm = this.fb.group({
       username: [''],
-      email: [''],
-      phone: [''],
+      email: ['', [Validators.pattern("[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}")]],
+      phone: ['', [Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
     });
     this.getListUser();
   }
 
+  get params() {
+    const p = Object.assign({}, this.query);
+    return p;
+  }
+
   getListUser() {
     this.isLoading = true;
-    this.serviceUsers.getListUsers().subscribe((res: any) => {
+    this.serviceUsers.getListUsers(this.params).subscribe((res: any) => {
       this.list = res.content;
-      this.total = res.numberOfElements;
+      this.total = res.totalElements;
       this.isLoading = false;
     });
   }
 
   getNextPage(e: PageEvent) {
     this.query.page = e.pageIndex;
-    this.query.per_page = e.pageSize;
+    this.query.size = e.pageSize;
+    this.getListUser();
+  }
+
+  search() {
+    this.query.page = 0;
+    if (this.usersForm.controls['username'].value) {
+      Object.assign(this.query, { username: this.usersForm.controls['username'].value })
+    }
+    if (this.usersForm.controls['email'].value) {
+      Object.assign(this.query, { email: this.usersForm.controls['email'].value })
+    }
+    if (this.usersForm.controls['phone'].value) {
+      Object.assign(this.query, { phone: this.usersForm.controls['phone'].value })
+    }
     this.getListUser();
   }
 }
