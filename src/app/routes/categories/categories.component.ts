@@ -1,8 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { MtxGridColumn } from '@ng-matero/extensions';
-import { UsersService } from '../users/users.service';
+import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
+import { CategoriesService } from './categories.service';
+import { TranslateService } from '@ngx-translate/core';
+import { TablesKitchenSinkEditComponent } from '../tables/kitchen-sink/edit/edit.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
@@ -10,7 +13,7 @@ import { UsersService } from '../users/users.service';
   styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit {
-  usersForm!: FormGroup;
+  categoriesForm!: FormGroup;
   list: any[] = [];
   total = 0;
   isLoading = true;
@@ -19,20 +22,47 @@ export class CategoriesComponent implements OnInit {
     size: 10,
   };
   columns: MtxGridColumn[] = [
-    { header: 'Họ tên', field: 'userName' },
-    { header: 'Email', field: 'email' },
-    { header: 'Số điện thoại', field: 'phone' },
-    { header: 'Vai trò', field: 'roleId', type: 'number' },
-    { header: 'Trạng thái', field: 'isActive', type: 'boolean' },
+    { header: 'Tên danh mục', field: 'categoryName' },
+    {
+      header: 'Hành động',
+      field: 'operation',
+      minWidth: 120,
+      width: '10%',
+      pinned: 'right',
+      type: 'button',
+      buttons: [
+        {
+          type: 'icon',
+          icon: 'fast_forward',
+          tooltip: 'Quản lý sản phẩm',
+          click: record => this.nextProductsPage(record),
+        },
+        {
+          type: 'icon',
+          icon: 'edit',
+          tooltip: 'Sửa',
+          click: record => this.edit(record),
+        },
+        {
+          color: 'warn',
+          icon: 'delete',
+          text: this.translate.stream('table_kitchen_sink.delete'),
+          tooltip: 'Xóa',
+          pop: true,
+          popTitle: this.translate.stream('table_kitchen_sink.confirm_delete'),
+          popCloseText: this.translate.stream('table_kitchen_sink.close'),
+          popOkText: this.translate.stream('table_kitchen_sink.ok'),
+          click: record => this.delete(record),
+        },
+      ],
+    },
   ];
-  constructor(private fb: FormBuilder, private serviceUsers: UsersService, private cdr: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder, private servicecategories: CategoriesService, private cdr: ChangeDetectorRef, private translate: TranslateService, public dialog: MtxDialog, private router: Router) { }
   ngOnInit(): void {
-    this.usersForm = this.fb.group({
-      username: [''],
-      email: ['', [Validators.pattern("[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}")]],
-      phone: ['', [Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+    this.categoriesForm = this.fb.group({
+      name: [''],
     });
-    this.getListUser();
+    this.getListCategories();
   }
 
   get params() {
@@ -40,9 +70,9 @@ export class CategoriesComponent implements OnInit {
     return p;
   }
 
-  getListUser() {
+  getListCategories() {
     this.isLoading = true;
-    this.serviceUsers.getListUsers(this.params).subscribe((res: any) => {
+    this.servicecategories.getListCategories(this.params).subscribe(res => {
       this.list = res.content;
       this.total = res.totalElements;
       this.isLoading = false;
@@ -52,20 +82,29 @@ export class CategoriesComponent implements OnInit {
   getNextPage(e: PageEvent) {
     this.query.page = e.pageIndex;
     this.query.size = e.pageSize;
-    this.getListUser();
+    this.getListCategories();
   }
 
   search() {
     this.query.page = 0;
-    if (this.usersForm.controls['username'].value) {
-      Object.assign(this.query, { username: this.usersForm.controls['username'].value })
+    if (this.categoriesForm.controls['name'].value) {
+      Object.assign(this.query, { categoryName: this.categoriesForm.controls['name'].value })
     }
-    if (this.usersForm.controls['email'].value) {
-      Object.assign(this.query, { email: this.usersForm.controls['email'].value })
+    this.getListCategories();
+  }
+
+  edit(value: any) {
+    const dialogRef = this.dialog.originalOpen(TablesKitchenSinkEditComponent, {
+      width: '600px',
+      data: { record: value },
+    });
+  }
+  delete(value: any) {
+    this.dialog.alert(`You have deleted ${value.position}!`);
+  }
+  nextProductsPage(value: any) {
+    if (value.id) {
+      this.router.navigate([`/categorie/${value.id}`])
     }
-    if (this.usersForm.controls['phone'].value) {
-      Object.assign(this.query, { phone: this.usersForm.controls['phone'].value })
-    }
-    this.getListUser();
   }
 }

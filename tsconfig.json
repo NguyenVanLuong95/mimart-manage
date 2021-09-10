@@ -29,7 +29,8 @@
       "@testing/*": ["testing/*"],
       "@env": ["environments"],
       "@env/*": ["environments/*"]
-    }
+    },
+    "noImplicitAny":false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

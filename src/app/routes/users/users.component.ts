@@ -42,7 +42,7 @@ export class UsersComponent implements OnInit {
 
   getListUser() {
     this.isLoading = true;
-    this.serviceUsers.getListUsers(this.params).subscribe((res: any) => {
+    this.serviceUsers.getListUsers(this.params).subscribe(res => {
       this.list = res.content;
       this.total = res.totalElements;
       this.isLoading = false;
