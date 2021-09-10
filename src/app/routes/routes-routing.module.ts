@@ -26,7 +26,7 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'users', component: UsersComponent },
       { path: 'notifications', component: NotificationsComponent },
-      { path: 'products', component: ProductsComponent },
+      { path: 'categorie/:id', component: ProductsComponent },
       { path: 'categories', component: CategoriesComponent },
       { path: 'orders', component: OrdersComponent },
       { path: 'warehouses', component: WarehousesComponent },
@@ -89,4 +89,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class RoutesRoutingModule {}
+export class RoutesRoutingModule { }

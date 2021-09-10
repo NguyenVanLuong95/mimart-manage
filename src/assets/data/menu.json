@@ -17,12 +17,6 @@
       "icon": "supervised_user_circle"
     },
     {
-      "route": "products",
-      "name": "products",
-      "type": "link",
-      "icon": "free_breakfast"
-    },
-    {
       "route": "categories",
       "name": "categories",
       "type": "link",
