@@ -12,6 +12,8 @@ import { LoginComponent } from './sessions/login/login.component';
 import { RegisterComponent } from './sessions/register/register.component';
 import { WarehousesComponent } from './warehouses/warehouses.component';
 import { OrdersComponent } from './orders/orders.component';
+import { CategoryAddEditComponent } from './categories/category_add_edit/category_add_edit.component';
+import { ProductAddEditComponent } from './products/product_add_edit/product_add_edit.component';
 
 const COMPONENTS: any[] = [DashboardComponent, LoginComponent, RegisterComponent];
 const COMPONENTS_DYNAMIC: any[] = [];
@@ -27,6 +29,8 @@ const COMPONENTS_DYNAMIC: any[] = [];
     ProductsComponent,
     WarehousesComponent,
     OrdersComponent,
+    CategoryAddEditComponent,
+    ProductAddEditComponent
   ],
   entryComponents: COMPONENTS_DYNAMIC,
 })

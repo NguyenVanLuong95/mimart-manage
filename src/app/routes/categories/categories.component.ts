@@ -6,6 +6,7 @@ import { CategoriesService } from './categories.service';
 import { TranslateService } from '@ngx-translate/core';
 import { TablesKitchenSinkEditComponent } from '../tables/kitchen-sink/edit/edit.component';
 import { Router } from '@angular/router';
+import { CategoryAddEditComponent } from './category_add_edit/category_add_edit.component';
 
 @Component({
   selector: 'app-categories',
@@ -23,6 +24,7 @@ export class CategoriesComponent implements OnInit {
   };
   columns: MtxGridColumn[] = [
     { header: 'Tên danh mục', field: 'categoryName' },
+    { header: 'Hình ảnh', field: 'categoryImageUrl', type: 'image' },
     {
       header: 'Hành động',
       field: 'operation',
@@ -69,11 +71,13 @@ export class CategoriesComponent implements OnInit {
     const p = Object.assign({}, this.query);
     return p;
   }
-
   getListCategories() {
     this.isLoading = true;
     this.servicecategories.getListCategories(this.params).subscribe(res => {
-      this.list = res.content;
+      this.list = res.content.map(x => {
+        x.categoryImageUrl = `data:image/png;base64,${x.categoryImageBase64}`;
+        return x;
+      });
       this.total = res.totalElements;
       this.isLoading = false;
     });
@@ -106,5 +110,10 @@ export class CategoriesComponent implements OnInit {
     if (value.id) {
       this.router.navigate([`/categorie/${value.id}`])
     }
+  }
+  addCategory() {
+    const dialogRef = this.dialog.originalOpen(CategoryAddEditComponent, {
+      width: '600px',
+    });
   }
 }
