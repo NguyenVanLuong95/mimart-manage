@@ -6,6 +6,7 @@ import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
 import { TablesKitchenSinkEditComponent } from '../tables/kitchen-sink/edit/edit.component';
 import { ProductsService } from './products.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ProductAddEditComponent } from './product_add_edit/product_add_edit.component';
 
 @Component({
   selector: 'app-products',
@@ -27,7 +28,7 @@ export class ProductsComponent implements OnInit {
   columns: MtxGridColumn[] = [
     { header: 'Tên sản phẩm', field: 'productName' },
     { header: 'Giá sản phẩm', field: 'unitPrice' },
-    { header: 'Hình ảnh', field: 'productImageUrl', type: 'image'},
+    { header: 'Hình ảnh', field: 'productImageUrl', type: 'image' },
     {
       header: 'Hành động',
       field: 'operation',
@@ -105,5 +106,11 @@ export class ProductsComponent implements OnInit {
   }
   delete(value: any) {
     this.dialog.alert(`You have deleted ${value.position}!`);
+  }
+  addProduct() {
+    const dialogRef = this.dialog.originalOpen(ProductAddEditComponent, {
+      width: '600px',
+      data: { record: this.productId },
+    });
   }
 }

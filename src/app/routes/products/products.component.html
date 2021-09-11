@@ -1,5 +1,3 @@
-<page-header></page-header>
-
 <div fxLayout="row wrap" class="matero-row">
   <div fxFlex="100" class="matero-col">
     <mat-card>
@@ -11,6 +9,8 @@
                  name="productName" />
         </mat-form-field>
         <button mat-raised-button color="primary" (click)="search()">Tìm kiếm</button>
+        <button mat-raised-button color="primary" style="margin-left: 1%;"
+                (click)="addProduct()">Thêm mới</button>
       </form>
     </mat-card>
     <mat-card>
