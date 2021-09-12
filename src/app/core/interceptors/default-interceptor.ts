@@ -20,7 +20,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     if (!req.url.includes('/api/')) {
       return next.handle(req);
     }
-
+    //sau can add them bearer token thi cong them vao day
     return next.handle(req).pipe(mergeMap((event: HttpEvent<any>) => this.handleOkReq(event)));
   }
 

@@ -5,6 +5,7 @@ import { map, share, switchMap, tap } from 'rxjs/operators';
 import { TokenService } from './token.service';
 import { Token, User } from './interface';
 import { guest } from './user';
+import { baseUrl } from '@shared/constant';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,9 @@ export class AuthService {
     this.token
       .change()
       .pipe(switchMap(() => (this.check() ? this.userReq$ : of(guest))))
-      .subscribe(user => this.user$.next(Object.assign({}, guest, user)));
+      .subscribe(user => {
+        this.user$.next(Object.assign({}, guest, user))
+      });
 
     this.token
       .refresh()
@@ -30,11 +33,18 @@ export class AuthService {
     return this.token.valid();
   }
 
-  login(email: string, password: string, rememberMe = false) {
-    return this.http.post<Token>('/auth/login', { email, password, remember_me: rememberMe }).pipe(
-      tap(token => this.token.set(token)),
-      map(() => this.check())
-    );
+  //login mặc định của ng-matero
+  //API call login đang làm: http://202.92.6.183:8080/authenticate
+  // login(email: string, password: string, rememberMe = false) {
+  //   return this.http.post<Token>('/auth/login', { email, password, remember_me: rememberMe }).pipe(
+  //     tap(token => this.token.set(token)),
+  //     map(() => this.check())
+  //   );
+  // }
+
+  login(body) {
+    return this.http.post<any>(`${baseUrl.baseUrl}/authenticate`, body).pipe(tap(token=>this.token.set(token.listData[0].token))
+    ,map(()=>this.check()))
   }
 
   refresh() {

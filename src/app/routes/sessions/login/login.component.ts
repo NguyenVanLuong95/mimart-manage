@@ -12,7 +12,7 @@ import { filter } from 'rxjs/operators';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {}
+  constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -35,22 +35,32 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    const body = {
+      "email": this.loginForm.controls.username.value,
+      "password": this.loginForm.controls.password.value
+    }
     this.auth
-      .login(this.username?.value, this.password?.value, this.rememberMe?.value)
-      .pipe(filter(authenticated => authenticated))
-      .subscribe(
-        () => this.router.navigateByUrl('/'),
-        (error: HttpErrorResponse) => {
-          if (error.status === 422) {
-            const form = this.loginForm;
-            const errors = error.error.errors;
-            Object.keys(errors).forEach(key => {
-              form.get(key === 'email' ? 'username' : key)?.setErrors({
-                remote: errors[key][0],
-              });
-            });
-          }
-        }
-      );
+      // đây là login mặc định
+      // .login(this.username?.value, this.password?.value, this.rememberMe?.value)
+      // .pipe(filter(authenticated => authenticated))
+      // .subscribe(
+      //   () => this.router.navigateByUrl('/'),
+      //   (error: HttpErrorResponse) => {
+      //     if (error.status === 422) {
+      //       const form = this.loginForm;
+      //       const errors = error.error.errors;
+      //       Object.keys(errors).forEach(key => {
+      //         form.get(key === 'email' ? 'username' : key)?.setErrors({
+      //           remote: errors[key][0],
+      //         });
+      //       });
+      //     }
+      //   }
+      // );
+
+      //login tự viết
+      .login(body).subscribe(res => {
+        this.router.navigate(['/'])
+      })
   }
 }
