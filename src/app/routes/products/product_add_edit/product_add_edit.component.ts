@@ -36,7 +36,6 @@ export class ProductAddEditComponent implements OnInit {
   onChangeFileInput(): void {
     const files: { [key: string]: File } = this.fileInput.nativeElement.files;
     this.file = files[0];
-    this.addProductForm.controls.productImage.setValue(this.file.name ? this.file.name : '')
   }
   onClickFileInputButton(): void {
     this.fileInput.nativeElement.click();
@@ -49,7 +48,8 @@ export class ProductAddEditComponent implements OnInit {
     formData.append('unitPrice', this.addProductForm.controls.unitPrice.value);
     this.productAddEditService.onSave(formData).subscribe(res => {
       if (res.code == 1) {
-        this.toastr.success("Thêm mới sản phẩm thành công!");
+        this.toastr.success(res.message);
+        this.onClose();
       } else {
         this.toastr.error("Thêm mới sản phẩm thất bại!")
       }
