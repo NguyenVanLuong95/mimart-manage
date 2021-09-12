@@ -48,11 +48,6 @@ export function TranslateHttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient],
       },
     }),
-    // Demo purposes only for GitHub Pages
-    HttpClientInMemoryWebApiModule.forRoot(InMemDataService, {
-      dataEncapsulation: false,
-      passThruUnknownUrl: true,
-    }),
   ],
   providers: [
     { provide: BASE_URL, useValue: environment.baseUrl },

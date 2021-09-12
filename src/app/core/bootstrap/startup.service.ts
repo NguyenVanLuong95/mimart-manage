@@ -5,12 +5,11 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { MenuService } from './menu.service';
 import { TokenService } from '../authentication/token.service';
 import { NgxPermissionsService, NgxRolesService } from 'ngx-permissions';
-
 @Injectable({
   providedIn: 'root',
 })
 export class StartupService {
-  private menuReq$ = this.http.get('/me/menu');
+  private menuReq$ = this.http.get('../../../assets/data/menu.json');
 
   constructor(
     private token: TokenService,
