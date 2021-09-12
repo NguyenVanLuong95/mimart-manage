@@ -76,6 +76,7 @@ export class ProductsComponent implements OnInit {
   getListProducts(id: Number) {
     this.isLoading = true;
     this.serviceProducts.getListProducts(this.params, id).subscribe(res => {
+      debugger
       this.list = res.content.map(x => {
         x.productImageUrl = `data:image/png;base64,${x.productImageBase64}`;
         return x;

@@ -3,11 +3,11 @@ import { Injectable } from '@angular/core';
 import { baseUrl } from '@shared/constant';
 import { Observable } from 'rxjs';
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class ProductAddEditService {
-    constructor(private http: HttpClient) { }
-    // onSave(body): Observable<any> {
-    //     return this.http.post<any>(`${baseUrl.baseUrl}/api/category`, body);
-    // }
+  constructor(private http: HttpClient) { }
+  onSave(body): Observable<any> {
+    return this.http.post<any>(`${baseUrl.baseUrl}/api/product`, body);
+  }
 }

@@ -25,7 +25,7 @@ export class CategoryAddEditComponent implements OnInit {
   ngOnInit() {
     this.addCategoryForm = this.fb.group({
       categoryName: ['', Validators.required],
-      categorImage: ['']
+      categoryImage: ['']
     });
   }
 
@@ -36,7 +36,7 @@ export class CategoryAddEditComponent implements OnInit {
   onChangeFileInput(): void {
     const files: { [key: string]: File } = this.fileInput.nativeElement.files;
     this.file = files[0];
-    this.addCategoryForm.controls.categorImage.setValue(this.file.name ? this.file.name : '')
+    this.addCategoryForm.controls.categoryImage.setValue(this.file.name ? this.file.name : '')
   }
   onClickFileInputButton(): void {
     this.fileInput.nativeElement.click();
