@@ -5,19 +5,12 @@
     <mat-card>
       <mat-card-title>Thông tin tìm kiếm</mat-card-title>
 
-      <form [formGroup]="usersForm">
+      <form [formGroup]="notificationsForm">
         <mat-form-field class="m-r-8">
-          <input matInput placeholder="Họ tên" formControlName="username" name="username" />
+          <input matInput placeholder="Tiêu đề" formControlName="title" name="title" />
         </mat-form-field>
         <mat-form-field class="m-r-8">
-          <input matInput placeholder="Email" formControlName="email" name="email" />
-        </mat-form-field>
-        <mat-form-field class="m-r-8">
-          <input
-                 matInput
-                 placeholder="Số điện thoại"
-                 formControlName="phone"
-                 name="phone" />
+          <input matInput placeholder="Nội dung" formControlName="content" name="content" />
         </mat-form-field>
         <button mat-raised-button color="primary" (click)="search()">Tìm kiếm</button>
       </form>

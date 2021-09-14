@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { MtxGridColumn } from '@ng-matero/extensions';
-import { UsersService } from '../users/users.service';
+import { NotificationsService } from './notifications.service';
 
 @Component({
   selector: 'app-notifications',
@@ -10,7 +10,7 @@ import { UsersService } from '../users/users.service';
   styleUrls: ['./notifications.component.scss'],
 })
 export class NotificationsComponent implements OnInit {
-  usersForm!: FormGroup;
+  notificationsForm!: FormGroup;
   list: any[] = [];
   total = 0;
   isLoading = true;
@@ -19,20 +19,17 @@ export class NotificationsComponent implements OnInit {
     size: 10,
   };
   columns: MtxGridColumn[] = [
-    { header: 'Họ tên', field: 'userName' },
-    { header: 'Email', field: 'email' },
-    { header: 'Số điện thoại', field: 'phone' },
-    { header: 'Vai trò', field: 'roleId', type: 'number' },
-    { header: 'Trạng thái', field: 'isActive', type: 'boolean' },
+    { header: 'Tiêu đề', field: 'title' },
+    { header: 'Nội dung', field: 'content' },
+    { header: 'Thời gian', field:'createAt' }
   ];
-  constructor(private fb: FormBuilder, private serviceUsers: UsersService, private cdr: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder, private serviceNotifications: NotificationsService, private cdr: ChangeDetectorRef) { }
   ngOnInit(): void {
-    this.usersForm = this.fb.group({
-      username: [''],
-      email: ['', [Validators.pattern("[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}")]],
-      phone: ['', [Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+    this.notificationsForm = this.fb.group({
+      title: [''],
+      content: [''],
     });
-    this.getListUser();
+    this.getListNotifications();
   }
 
   get params() {
@@ -40,9 +37,9 @@ export class NotificationsComponent implements OnInit {
     return p;
   }
 
-  getListUser() {
+  getListNotifications() {
     this.isLoading = true;
-    this.serviceUsers.getListUsers(this.params).subscribe((res: any) => {
+    this.serviceNotifications.getListNotifications(this.params).subscribe((res: any) => {
       this.list = res.content;
       this.total = res.totalElements;
       this.isLoading = false;
@@ -52,20 +49,17 @@ export class NotificationsComponent implements OnInit {
   getNextPage(e: PageEvent) {
     this.query.page = e.pageIndex;
     this.query.size = e.pageSize;
-    this.getListUser();
+    this.getListNotifications();
   }
 
   search() {
     this.query.page = 0;
-    if (this.usersForm.controls['username'].value) {
-      Object.assign(this.query, { username: this.usersForm.controls['username'].value })
+    if (this.notificationsForm.controls['title'].value) {
+      Object.assign(this.query, { title: this.notificationsForm.controls['title'].value })
     }
-    if (this.usersForm.controls['email'].value) {
-      Object.assign(this.query, { email: this.usersForm.controls['email'].value })
+    if (this.notificationsForm.controls['content'].value) {
+      Object.assign(this.query, { content: this.notificationsForm.controls['content'].value })
     }
-    if (this.usersForm.controls['phone'].value) {
-      Object.assign(this.query, { phone: this.usersForm.controls['phone'].value })
-    }
-    this.getListUser();
+    this.getListNotifications();
   }
 }
