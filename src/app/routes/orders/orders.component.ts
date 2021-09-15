@@ -18,6 +18,12 @@ export class OrdersComponent implements OnInit {
     page: 0,
     size: 10,
   };
+  tabLinks = [
+    { label: 'Đơn hàng vừa tạo', link: 'sunny-tab' },
+    { label: 'Đơn hàng đang giao', link: 'rainy-tab' },
+    { label: 'Đơn hàng đã giao', link: 'foggy-tab' },
+    { label: 'Đơn hàng đã hủy', link: 'foggy-tab' },
+  ];
   columns: MtxGridColumn[] = [
     { header: 'Họ tên', field: 'userName' },
     { header: 'Email', field: 'email' },

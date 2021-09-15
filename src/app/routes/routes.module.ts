@@ -30,7 +30,7 @@ const COMPONENTS_DYNAMIC: any[] = [];
     WarehousesComponent,
     OrdersComponent,
     CategoryAddEditComponent,
-    ProductAddEditComponent
+    ProductAddEditComponent,
   ],
   entryComponents: COMPONENTS_DYNAMIC,
 })
