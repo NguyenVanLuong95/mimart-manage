@@ -1,4 +1,4 @@
-<page-header></page-header>
+<!-- <page-header></page-header>
 
 <div fxLayout="row wrap" class="matero-row">
   <div fxFlex="100" class="matero-col">
@@ -36,4 +36,13 @@
       </mtx-grid>
     </mat-card>
   </div>
-</div>
+</div> -->
+<nav mat-tab-nav-bar aria-label="weather navigation links">
+  <a mat-tab-link
+     *ngFor="let tabLink of tabLinks; let i = index"
+     [routerLink]="tabLink.link"
+     routerLinkActive #rla="routerLinkActive"
+     [active]="rla.isActive">
+    {{tabLink.label}}
+  </a>
+</nav>

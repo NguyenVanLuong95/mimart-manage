@@ -31,8 +31,30 @@
     {
       "route": "orders",
       "name": "orders",
-      "type": "link",
-      "icon": "shopping_cart"
+      "type": "sub",
+      "icon": "shopping_cart",
+      "children": [
+        {
+          "route": "new-orders",
+          "name": "new-orders",
+          "type": "link"
+        },
+        {
+          "route": "shipping",
+          "name": "shipping",
+          "type": "link"
+        },
+        {
+          "route": "shipped",
+          "name": "shipped",
+          "type": "link"
+        },
+        {
+          "route": "canceled",
+          "name": "canceled",
+          "type": "link"
+        }
+      ]
     },
     {
       "route": "warehouses",

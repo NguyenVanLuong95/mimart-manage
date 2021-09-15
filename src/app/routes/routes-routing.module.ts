@@ -12,8 +12,6 @@ import { UsersComponent } from './users/users.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { ProductsComponent } from './products/products.component';
-import { OrdersComponent } from './orders/orders.component';
-import { WarehousesComponent } from './warehouses/warehouses.component';
 
 const routes: Routes = [
   {
@@ -28,8 +26,10 @@ const routes: Routes = [
       { path: 'notifications', component: NotificationsComponent },
       { path: 'categorie/:id', component: ProductsComponent },
       { path: 'categories', component: CategoriesComponent },
-      { path: 'orders', component: OrdersComponent },
-      { path: 'warehouses', component: WarehousesComponent },
+      { 
+        path: 'orders', 
+        loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule) 
+      },
       {
         path: 'design',
         loadChildren: () => import('./design/design.module').then(m => m.DesignModule),
