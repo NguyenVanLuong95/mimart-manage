@@ -1,13 +1,13 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { MtxGridColumn } from '@ng-matero/extensions';
+import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
 import { NotificationsService } from './notifications.service';
+import { NotificationAddEditComponent } from './notification_add_edit/notification_add_edit.component';
 
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
-  styleUrls: ['./notifications.component.scss'],
 })
 export class NotificationsComponent implements OnInit {
   notificationsForm!: FormGroup;
@@ -21,9 +21,9 @@ export class NotificationsComponent implements OnInit {
   columns: MtxGridColumn[] = [
     { header: 'Tiêu đề', field: 'title' },
     { header: 'Nội dung', field: 'content' },
-    { header: 'Thời gian', field:'createAt' }
+    { header: 'Thời gian', field: 'createAt' }
   ];
-  constructor(private fb: FormBuilder, private serviceNotifications: NotificationsService, private cdr: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder, private serviceNotifications: NotificationsService, private cdr: ChangeDetectorRef, public dialog: MtxDialog) { }
   ngOnInit(): void {
     this.notificationsForm = this.fb.group({
       title: [''],
@@ -61,5 +61,11 @@ export class NotificationsComponent implements OnInit {
       Object.assign(this.query, { content: this.notificationsForm.controls['content'].value })
     }
     this.getListNotifications();
+  }
+
+  addNotification() {
+    const dialogRef = this.dialog.originalOpen(NotificationAddEditComponent, {
+      width: '600px',
+    });
   }
 }
