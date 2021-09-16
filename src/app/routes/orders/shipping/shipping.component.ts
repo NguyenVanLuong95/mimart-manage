@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { MtxGridColumn } from '@ng-matero/extensions';
-import { UsersService } from 'app/routes/users/users.service';
+import * as moment from 'moment';
 import { OrdersService } from '../orders.service';
 
 @Component({
@@ -39,7 +39,10 @@ export class ShippingComponent implements OnInit {
   getListShippingOrders() {
     this.isLoading = true;
     this.serviceOrders.getListShippingOrders(this.params).subscribe((res: any) => {
-      this.list = res.content;
+      this.list = res.content.map(x => {
+        x.createdDate = moment(x.createdDate).format('hh:mm:ss DD/MM/YYYY');
+        return x;
+      });
       this.total = res.totalElements;
       this.isLoading = false;
     });
