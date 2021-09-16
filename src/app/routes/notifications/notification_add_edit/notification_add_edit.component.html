@@ -18,7 +18,7 @@
     <div fxLayout="row wrap" class="matero-row" style="margin-top: 1%;">
       <div fxFlex="66.67" fxFlex.lt-sm="100" class="matero-col"></div>
       <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
-        <button mat-raised-button color="primary" (click)="onSave()">Lưu</button>
+        <button mat-raised-button color="primary" (click)="onSave()" [disabled]="addNotificationForm.invalid">Lưu</button>
         <button mat-raised-button color="primary" (click)="onClose()"
                 style="margin-left: 1%;">Đóng</button>
       </div>

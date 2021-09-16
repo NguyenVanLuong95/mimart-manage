@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
+import * as moment from 'moment';
 import { NotificationsService } from './notifications.service';
 import { NotificationAddEditComponent } from './notification_add_edit/notification_add_edit.component';
 
@@ -40,7 +41,10 @@ export class NotificationsComponent implements OnInit {
   getListNotifications() {
     this.isLoading = true;
     this.serviceNotifications.getListNotifications(this.params).subscribe((res: any) => {
-      this.list = res.content;
+      this.list = res.content.map(x => {
+        x.createAt = moment(x.createAt).format('hh:mm:ss DD/MM/YYYY');
+        return x;
+      });
       this.total = res.totalElements;
       this.isLoading = false;
     });
