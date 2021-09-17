@@ -71,8 +71,14 @@ export class CategoriesComponent implements OnInit {
     return p;
   }
   getListCategories() {
+    const params = { ... this.categoriesForm.value }
+    params.page = this.query.page;
+    params.size = this.query.size;
+    if (!this.categoriesForm.controls['name'].value) {
+      delete params.name;
+    }
     this.isLoading = true;
-    this.servicecategories.getListCategories(this.params).subscribe(res => {
+    this.servicecategories.getListCategories(params).subscribe(res => {
       this.list = res.content.map(x => {
         x.categoryImageUrl = `data:image/png;base64,${x.categoryImageBase64}`;
         return x;

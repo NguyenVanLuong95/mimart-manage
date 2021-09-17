@@ -37,8 +37,14 @@ export class NewOrdersComponent implements OnInit {
   }
 
   getListNewOrders() {
+    const params = { ... this.newOrdersForm.value }
+    params.page = this.query.page;
+    params.size = this.query.size;
+    if (!this.newOrdersForm.controls['code'].value) {
+      delete params.code;
+    }
     this.isLoading = true;
-    this.serviceOrders.getListNewOrders(this.params).subscribe((res: any) => {
+    this.serviceOrders.getListNewOrders(params).subscribe((res: any) => {
       this.list = res.content.map(x => {
         x.createdDate = moment(x.createdDate).format('hh:mm:ss DD/MM/YYYY');
         return x;

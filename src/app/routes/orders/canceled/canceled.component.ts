@@ -37,8 +37,14 @@ export class CanceledComponent implements OnInit {
   }
 
   getListCanceledOrders() {
+    const params = { ... this.canceledForm.value }
+    params.page = this.query.page;
+    params.size = this.query.size;
+    if (!this.canceledForm.controls['code'].value) {
+      delete params.code;
+    }
     this.isLoading = true;
-    this.serviceOrders.getListCanceledOrders(this.params).subscribe((res: any) => {
+    this.serviceOrders.getListCanceledOrders(params).subscribe((res: any) => {
       this.list = res.content.map(x => {
         x.createdDate = moment(x.createdDate).format('hh:mm:ss DD/MM/YYYY');
         return x;

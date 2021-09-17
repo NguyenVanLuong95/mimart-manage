@@ -57,8 +57,20 @@ export class UsersComponent implements OnInit {
   }
 
   getListUser() {
+    const params = { ... this.usersForm.value }
+    params.page = this.query.page;
+    params.size = this.query.size;
+    if (!this.usersForm.controls['username'].value) {
+      delete params.username;
+    }
+    if (!this.usersForm.controls['email'].value) {
+      delete params.email;
+    }
+    if (!this.usersForm.controls['phone'].value) {
+      delete params.phone;
+    }
     this.isLoading = true;
-    this.serviceUsers.getListUsers(this.params).subscribe(res => {
+    this.serviceUsers.getListUsers(params).subscribe(res => {
       this.list = res.content.map(x => {
         x.isActive = x.isActive == true ? "Đang hoạt động" : "Không hoạt động";
         x.roleId = x.roleId == 1 ? "Quản trị" : "Người dùng";
@@ -77,15 +89,6 @@ export class UsersComponent implements OnInit {
 
   search() {
     this.query.page = 0;
-    if (this.usersForm.controls['username'].value) {
-      Object.assign(this.query, { username: this.usersForm.controls['username'].value })
-    }
-    if (this.usersForm.controls['email'].value) {
-      Object.assign(this.query, { email: this.usersForm.controls['email'].value })
-    }
-    if (this.usersForm.controls['phone'].value) {
-      Object.assign(this.query, { phone: this.usersForm.controls['phone'].value })
-    }
     this.getListUser();
   }
   edit(value: any) {

@@ -37,8 +37,14 @@ export class ShippingComponent implements OnInit {
   }
 
   getListShippingOrders() {
+    const params = { ... this.shippingForm.value }
+    params.page = this.query.page;
+    params.size = this.query.size;
+    if (!this.shippingForm.controls['code'].value) {
+      delete params.code;
+    }
     this.isLoading = true;
-    this.serviceOrders.getListShippingOrders(this.params).subscribe((res: any) => {
+    this.serviceOrders.getListShippingOrders(params).subscribe((res: any) => {
       this.list = res.content.map(x => {
         x.createdDate = moment(x.createdDate).format('hh:mm:ss DD/MM/YYYY');
         return x;

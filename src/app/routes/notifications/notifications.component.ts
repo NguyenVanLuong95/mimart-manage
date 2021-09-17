@@ -68,8 +68,17 @@ export class NotificationsComponent implements OnInit {
   }
 
   getListNotifications() {
+    const params = { ... this.notificationsForm.value }
+    params.page = this.query.page;
+    params.size = this.query.size;
+    if (!this.notificationsForm.controls['title'].value) {
+      delete params.title;
+    }
+    if (!this.notificationsForm.controls['content'].value) {
+      delete params.content;
+    }
     this.isLoading = true;
-    this.serviceNotifications.getListNotifications(this.params).subscribe((res: any) => {
+    this.serviceNotifications.getListNotifications(params).subscribe((res: any) => {
       this.list = res.content.map(x => {
         x.createAt = moment(x.createAt).format('hh:mm:ss DD/MM/YYYY');
         return x;
