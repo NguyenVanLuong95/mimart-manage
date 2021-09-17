@@ -45,8 +45,8 @@ export class CategoryAddEditComponent implements OnInit {
     formData.append('categoryImage', this.file);
     formData.append('categoryName', this.addCategoryForm.controls.categoryName.value);
     this.categoryAddEditService.onSave(formData).subscribe(res => {
-      if (res.code == 1) {
-        this.toastr.success(res.message);
+      if (res) {
+        this.toastr.success("Thêm mới danh mục thành công!");
         this.onClose();
       } else {
         this.toastr.error("Thêm mới danh mục thất bại!")

@@ -36,9 +36,8 @@ export class NotificationAddEditComponent implements OnInit {
       'content': this.addNotificationForm.controls.content.value
     }
     this.notificationAddEditService.onSave(body).subscribe(res => {
-      debugger
-      if (res.code == 1) {
-        this.toastr.success(res.message);
+      if (res) {
+        this.toastr.success("Thêm mới thông báo thành công!");
         this.onClose();
       } else {
         this.toastr.error("Thêm mới thông báo thất bại!")

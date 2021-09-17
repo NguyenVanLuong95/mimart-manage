@@ -47,8 +47,8 @@ export class ProductAddEditComponent implements OnInit {
     formData.append('productName', this.addProductForm.controls.productName.value);
     formData.append('unitPrice', this.addProductForm.controls.unitPrice.value);
     this.productAddEditService.onSave(formData).subscribe(res => {
-      if (res.code == 1) {
-        this.toastr.success(res.message);
+      if (res) {
+        this.toastr.success("Thêm mới danh mục thành công!");
         this.onClose();
       } else {
         this.toastr.error("Thêm mới sản phẩm thất bại!")
