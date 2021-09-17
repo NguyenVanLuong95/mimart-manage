@@ -1,8 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { MtxGridColumn } from '@ng-matero/extensions';
+import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
+import { TablesKitchenSinkEditComponent } from 'app/routes/tables/kitchen-sink/edit/edit.component';
 import * as moment from 'moment';
+import { NewOrdersDetailComponent } from '../new-orders-detail/new-orders-detail.component';
 import { OrdersService } from '../orders.service';
 
 @Component({
@@ -22,8 +24,24 @@ export class NewOrdersComponent implements OnInit {
     { header: 'Mã đơn hàng', field: 'orderCode' },
     { header: 'Ngày tạo', field: 'createdDate' },
     { header: 'Tổng giá', field: 'totalAmount', type: 'number' },
+    {
+      header: 'Hành động',
+      field: 'operation',
+      minWidth: 120,
+      width: '10%',
+      pinned: 'right',
+      type: 'button',
+      buttons: [
+        {
+          type: 'icon',
+          icon: 'remove_red_eye',
+          tooltip: 'Sửa',
+          click: record => this.edit(record),
+        },
+      ],
+    },
   ];
-  constructor(private fb: FormBuilder, private serviceOrders: OrdersService, private cdr: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder, private serviceOrders: OrdersService, private cdr: ChangeDetectorRef, public dialog: MtxDialog,) { }
   ngOnInit(): void {
     this.newOrdersForm = this.fb.group({
       code: [''],
@@ -66,5 +84,11 @@ export class NewOrdersComponent implements OnInit {
       Object.assign(this.query, { code: this.newOrdersForm.controls['code'].value })
     }
     this.getListNewOrders();
+  }
+  edit(value: any) {
+    const dialogRef = this.dialog.originalOpen(NewOrdersDetailComponent, {
+      width: '600px',
+      data: { record: value.productList },
+    });
   }
 }

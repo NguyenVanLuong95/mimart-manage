@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-title>Chi Tiết Đơn Hàng</mat-card-title>
+  <mtx-grid
+            [data]="list"
+            [columns]="columns"
+            [length]="total"
+            [pageOnFront]="false"
+            [pageIndex]="query.page"
+            [pageSize]="query.size"
+            [pageSizeOptions]="[5, 10, 20]">
+  </mtx-grid>
+
+  <div fxLayout="row wrap" class="matero-row" style="margin-top: 1%;">
+    <div style="margin-left: 85%; margin-top: 1%;" fxFlex.lt-sm="100" class="matero-col">
+      <button mat-raised-button color="primary" (click)="onClose()"
+              style="margin-left: 1%;">Đóng</button>
+    </div>
+  </div>
+</mat-card>
