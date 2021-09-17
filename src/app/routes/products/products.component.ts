@@ -74,8 +74,14 @@ export class ProductsComponent implements OnInit {
   }
 
   getListProducts(id: Number) {
+    const params = { ... this.productsForm.value }
+    params.page = this.query.page;
+    params.size = this.query.size;
+    if (!this.productsForm.controls['productName'].value) {
+      delete params.productName;
+    }
     this.isLoading = true;
-    this.serviceProducts.getListProducts(this.params, id).subscribe(res => {
+    this.serviceProducts.getListProducts(params, id).subscribe(res => {
       this.list = res.content.map(x => {
         x.productImageUrl = `data:image/png;base64,${x.productImageBase64}`;
         return x;
