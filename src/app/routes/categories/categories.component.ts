@@ -11,7 +11,6 @@ import { CategoryAddEditComponent } from './category_add_edit/category_add_edit.
 @Component({
   selector: 'app-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit {
   categoriesForm!: FormGroup;
