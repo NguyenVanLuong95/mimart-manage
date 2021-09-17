@@ -1,8 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
+import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
+import { TablesKitchenSinkEditComponent } from '../tables/kitchen-sink/edit/edit.component';
 import { NotificationsService } from './notifications.service';
 import { NotificationAddEditComponent } from './notification_add_edit/notification_add_edit.component';
 
@@ -22,9 +24,36 @@ export class NotificationsComponent implements OnInit {
   columns: MtxGridColumn[] = [
     { header: 'Tiêu đề', field: 'title' },
     { header: 'Nội dung', field: 'content' },
-    { header: 'Thời gian', field: 'createAt' }
+    { header: 'Thời gian', field: 'createAt' },
+    {
+      header: 'Hành động',
+      field: 'operation',
+      minWidth: 120,
+      width: '10%',
+      pinned: 'right',
+      type: 'button',
+      buttons: [
+        {
+          type: 'icon',
+          icon: 'edit',
+          tooltip: 'Sửa',
+          click: record => this.edit(record),
+        },
+        {
+          color: 'warn',
+          icon: 'delete',
+          text: this.translate.stream('table_kitchen_sink.delete'),
+          tooltip: 'Xóa',
+          pop: true,
+          popTitle: this.translate.stream('table_kitchen_sink.confirm_delete'),
+          popCloseText: this.translate.stream('table_kitchen_sink.close'),
+          popOkText: this.translate.stream('table_kitchen_sink.ok'),
+          click: record => this.delete(record),
+        },
+      ],
+    },
   ];
-  constructor(private fb: FormBuilder, private serviceNotifications: NotificationsService, private cdr: ChangeDetectorRef, public dialog: MtxDialog) { }
+  constructor(private fb: FormBuilder, private serviceNotifications: NotificationsService, private cdr: ChangeDetectorRef, public dialog: MtxDialog, private translate: TranslateService) { }
   ngOnInit(): void {
     this.notificationsForm = this.fb.group({
       title: [''],
@@ -71,5 +100,15 @@ export class NotificationsComponent implements OnInit {
     const dialogRef = this.dialog.originalOpen(NotificationAddEditComponent, {
       width: '600px',
     });
+  }
+
+  edit(value: any) {
+    const dialogRef = this.dialog.originalOpen(TablesKitchenSinkEditComponent, {
+      width: '600px',
+      data: { record: value },
+    });
+  }
+  delete(value: any) {
+    this.dialog.alert(`You have deleted ${value.position}!`);
   }
 }

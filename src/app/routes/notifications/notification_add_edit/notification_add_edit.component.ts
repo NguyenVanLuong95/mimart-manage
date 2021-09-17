@@ -31,10 +31,11 @@ export class NotificationAddEditComponent implements OnInit {
   }
 
   onSave() {
-    const formData = new FormData();
-    formData.append('title', this.addNotificationForm.controls.title.value);
-    formData.append('content', this.addNotificationForm.controls.content.value);
-    this.notificationAddEditService.onSave(formData).subscribe(res => {
+    const body = {
+      'title': this.addNotificationForm.controls.title.value,
+      'content': this.addNotificationForm.controls.content.value
+    }
+    this.notificationAddEditService.onSave(body).subscribe(res => {
       debugger
       if (res.code == 1) {
         this.toastr.success(res.message);
