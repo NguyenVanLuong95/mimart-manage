@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
-import { TablesKitchenSinkEditComponent } from 'app/routes/tables/kitchen-sink/edit/edit.component';
 import * as moment from 'moment';
 import { NewOrdersDetailComponent } from '../new-orders-detail/new-orders-detail.component';
 import { OrdersService } from '../orders.service';

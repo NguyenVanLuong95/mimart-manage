@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MtxGridColumn } from '@ng-matero/extensions';
 import { TablesKitchenSinkEditComponent } from 'app/routes/tables/kitchen-sink/edit/edit.component';
 
 @Component({
@@ -16,13 +15,7 @@ export class NewOrdersDetailComponent implements OnInit {
     page: 0,
     size: 10,
   };
-  columns: MtxGridColumn[] = [
-    { header: 'Tên hàng', field: 'productName' },
-    { header: 'Số lượng', field: 'quantity' },
-    { header: 'Hình ảnh', field: 'productImageUrl', type: 'image' },
-    { header: 'Tổng giá', field: 'amount', type: 'number' },
-
-  ];
+  displayedColumns = ['productName', 'quantity', 'productImageUrl', 'amount'];
   constructor(
     public dialogRef: MatDialogRef<TablesKitchenSinkEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
