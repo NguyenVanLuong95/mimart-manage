@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ProductsService {
   constructor(private http: HttpClient) { }
-  getListProducts(params = {}, id: Number): Observable<any> {
-    return this.http.get<any>(`${baseUrl.baseUrl}/api/search-products/${id}`, { params });
+  getListProducts(params = {}): Observable<any> {
+    return this.http.get<any>(`${baseUrl.baseUrl}/api/search-products`, { params });
   }
 }

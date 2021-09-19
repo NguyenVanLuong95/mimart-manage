@@ -6,39 +6,43 @@
       <div fxFlex="50" fxFlex.lt-sm="100" class="matero-col">
         <mat-form-field class="m-r-8">
           <input
-            matInput
-            placeholder="Tên sản phẩm"
-            formControlName="productName"
-            name="productName"
-          />
+                 matInput
+                 placeholder="Tên sản phẩm"
+                 formControlName="productName"
+                 name="productName" />
         </mat-form-field>
       </div>
       <div fxFlex="50" fxFlex.lt-sm="100" class="matero-col">
         <mat-form-field class="m-r-8">
           <input
-            matInput
-            placeholder="Giá sản phẩm"
-            formControlName="unitPrice"
-            name="unitPrice"
-          />
+                 matInput
+                 placeholder="Giá sản phẩm"
+                 formControlName="unitPrice"
+                 name="unitPrice" />
         </mat-form-field>
       </div>
     </div>
     <div fxLayout="row wrap" class="matero-row">
-      <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
+      <div fxFlex="50" fxFlex.lt-sm="100">
+        <mat-form-field>
+          <mat-select required formControlName="category">
+            <mat-option *ngFor="let item of listCategory" [value]="item.id">
+              {{item.categoryName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" fxFlex.lt-sm="100" class="matero-col">
         <input
-          type="file"
-          #fileInput
-          accept="image/*"
-          formControlName="productImage"
-          (change)="onChangeFileInput()"
-        />
+               type="file"
+               #fileInput
+               accept="image/*"
+               formControlName="productImage"
+               (change)="onChangeFileInput()" />
         <button
-          mat-raised-button
-          color="primary"
-          class="file-select-button"
-          (click)="onClickFileInputButton()"
-        >
+                mat-raised-button
+                color="primary"
+                class="file-select-button"
+                (click)="onClickFileInputButton()">
           <mat-icon>attach_file</mat-icon>
         </button>
       </div>
@@ -47,7 +51,8 @@
     <div fxLayout="row wrap" class="matero-row" style="margin-top: 1%">
       <div fxFlex="66.67" fxFlex.lt-sm="100" class="matero-col"></div>
       <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
-        <button mat-raised-button color="primary" (click)="onSave()" [disabled]="addProductForm.invalid">Lưu</button>
+        <button mat-raised-button color="primary" (click)="onSave()"
+                [disabled]="addProductForm.invalid">Lưu</button>
         <button mat-raised-button color="primary" (click)="onClose()" style="margin-left: 1%">
           Đóng
         </button>
