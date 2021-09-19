@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CategoriesService } from 'app/routes/categories/categories.service';
 import { ToastrService } from 'ngx-toastr';
 import { ProductAddEditService } from './product_add_edit.service';
 
@@ -13,20 +14,30 @@ export class ProductAddEditComponent implements OnInit {
   @ViewChild('fileInput')
   fileInput;
   file!: File;
+  listCategory: any;
   constructor(
     private fb: FormBuilder,
     private productAddEditService: ProductAddEditService,
     public dialogRef: MatDialogRef<ProductAddEditComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private categoryService: CategoriesService
   ) { }
 
   ngOnInit() {
     this.addProductForm = this.fb.group({
       productName: ['', Validators.required],
       unitPrice: ['', Validators.required],
-      productImage: ['']
+      productImage: [''],
+      category: ['', Validators.required]
     });
+    this.getListCategories();
+    this.addProductForm.controls['category'].setValue(1);
+  }
+
+  getListCategories() {
+    this.categoryService.getListCategories().subscribe(res => {
+      this.listCategory = res.content;
+    })
   }
 
   onClose(): void {
@@ -42,13 +53,13 @@ export class ProductAddEditComponent implements OnInit {
   }
   onSave() {
     const formData = new FormData();
-    formData.append('categoryId', this.data.record)
+    formData.append('categoryId', this.addProductForm.controls['category'].value)
     formData.append('productImage', this.file);
     formData.append('productName', this.addProductForm.controls.productName.value);
     formData.append('unitPrice', this.addProductForm.controls.unitPrice.value);
     this.productAddEditService.onSave(formData).subscribe(res => {
       if (res) {
-        this.toastr.success("Thêm mới danh mục thành công!");
+        this.toastr.success("Thêm mới sản phẩm thành công!");
         this.onClose();
       } else {
         this.toastr.error("Thêm mới sản phẩm thất bại!")

@@ -28,16 +28,10 @@ export class CategoriesComponent implements OnInit {
       header: 'Hành động',
       field: 'operation',
       minWidth: 120,
-      width: '10%',
+      width: '8%',
       pinned: 'right',
       type: 'button',
       buttons: [
-        {
-          type: 'icon',
-          icon: 'fast_forward',
-          tooltip: 'Quản lý sản phẩm',
-          click: record => this.nextProductsPage(record),
-        },
         {
           type: 'icon',
           icon: 'edit',
@@ -111,11 +105,11 @@ export class CategoriesComponent implements OnInit {
   delete(value: any) {
     this.dialog.alert(`You have deleted ${value.position}!`);
   }
-  nextProductsPage(value: any) {
-    if (value.id) {
-      this.router.navigate([`/categorie/${value.id}`])
-    }
-  }
+  // nextProductsPage(value: any) {
+  //   if (value.id) {
+  //     this.router.navigate([`/categorie/${value.id}`])
+  //   }
+  // }
   addCategory() {
     const dialogRef = this.dialog.originalOpen(CategoryAddEditComponent, {
       width: '600px',

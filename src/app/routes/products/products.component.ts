@@ -11,13 +11,11 @@ import { ProductAddEditComponent } from './product_add_edit/product_add_edit.com
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
   @ViewChild('statusTpl', { static: true }) statusTpl!: TemplateRef<any>;
   productsForm!: FormGroup;
   list: any[] = [];
-  productId: any;
   total = 0;
   isLoading = true;
   images: any[] = [];
@@ -29,6 +27,7 @@ export class ProductsComponent implements OnInit {
     { header: 'Tên sản phẩm', field: 'productName' },
     { header: 'Giá sản phẩm', field: 'unitPrice' },
     { header: 'Hình ảnh', field: 'productImageUrl', type: 'image' },
+    { header: 'Danh mục', field: 'categoryName' },
     {
       header: 'Hành động',
       field: 'operation',
@@ -62,10 +61,7 @@ export class ProductsComponent implements OnInit {
     this.productsForm = this.fb.group({
       productName: [''],
     });
-    this.productId = this.route.snapshot.paramMap.get('id');
-    if (this.productId) {
-      this.getListProducts(this.productId);
-    }
+    this.getListProducts();
   }
 
   get params() {
@@ -73,7 +69,7 @@ export class ProductsComponent implements OnInit {
     return p;
   }
 
-  getListProducts(id: Number) {
+  getListProducts() {
     const params = { ... this.productsForm.value }
     params.page = this.query.page;
     params.size = this.query.size;
@@ -81,7 +77,7 @@ export class ProductsComponent implements OnInit {
       delete params.productName;
     }
     this.isLoading = true;
-    this.serviceProducts.getListProducts(params, id).subscribe(res => {
+    this.serviceProducts.getListProducts(params).subscribe(res => {
       this.list = res.content.map(x => {
         x.productImageUrl = `data:image/png;base64,${x.productImageBase64}`;
         return x;
@@ -94,7 +90,7 @@ export class ProductsComponent implements OnInit {
   getNextPage(e: PageEvent) {
     this.query.page = e.pageIndex;
     this.query.size = e.pageSize;
-    this.getListProducts(this.productId);
+    this.getListProducts();
   }
 
   search() {
@@ -102,7 +98,7 @@ export class ProductsComponent implements OnInit {
     if (this.productsForm.controls['productName'].value) {
       Object.assign(this.query, { productName: this.productsForm.controls['productName'].value })
     }
-    this.getListProducts(this.productId);
+    this.getListProducts();
   }
   edit(value: any) {
     const dialogRef = this.dialog.originalOpen(TablesKitchenSinkEditComponent, {
@@ -115,8 +111,7 @@ export class ProductsComponent implements OnInit {
   }
   addProduct() {
     const dialogRef = this.dialog.originalOpen(ProductAddEditComponent, {
-      width: '600px',
-      data: { record: this.productId },
+      width: '700px',
     });
   }
 }
