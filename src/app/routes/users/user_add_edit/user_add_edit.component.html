@@ -1,0 +1,56 @@
+<mat-card>
+  <mat-card-title>Thông tin người dùng</mat-card-title>
+
+  <form [formGroup]="editUserForm">
+    <div fxLayout="row wrap" class="matero-row">
+      <div fxFlex="50" fxFlex.lt-sm="100" class="matero-col">
+        <mat-form-field class="m-r-8">
+          <input
+                 readonly
+                 matInput
+                 placeholder="Tên người dùng"
+                 formControlName="userName"
+                 name="userName" />
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" fxFlex.lt-sm="100" class="matero-col">
+        <mat-form-field class="m-r-8">
+          <input
+                 readonly
+                 matInput
+                 placeholder="Số điện thoại"
+                 formControlName="phone"
+                 name="phone" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row wrap" class="matero-row">
+      <div fxFlex="50" fxFlex.lt-sm="100">
+        <mat-form-field>
+          <mat-select required formControlName="isActive">
+            <mat-option *ngFor="let item of isActive" [value]="item">
+              {{item}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" fxFlex.lt-sm="100">
+        <mat-form-field>
+          <mat-select required formControlName="role">
+            <mat-option *ngFor="let item of roleId" [value]="item">
+              {{item}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="row wrap" class="matero-row" style="margin-top: 1%">
+      <div fxFlex="66.67" fxFlex.lt-sm="100" class="matero-col"></div>
+      <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
+        <button mat-raised-button color="primary" (click)="onSave()">Lưu</button>
+        <button mat-raised-button color="primary" (click)="onClose()" style="margin-left: 1%">
+          Đóng
+        </button>
+      </div>
+    </div>
+  </form>
+</mat-card>

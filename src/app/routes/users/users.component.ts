@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from './users.service';
 import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
 import { PageEvent } from '@angular/material/paginator';
-import { TablesKitchenSinkEditComponent } from '../tables/kitchen-sink/edit/edit.component';
+import { UserAddEditComponent } from './user_add_edit/user_add_edit.component';
 
 @Component({
   selector: 'app-users',
@@ -92,7 +92,7 @@ export class UsersComponent implements OnInit {
     this.getListUser();
   }
   edit(value: any) {
-    const dialogRef = this.dialog.originalOpen(TablesKitchenSinkEditComponent, {
+    const dialogRef = this.dialog.originalOpen(UserAddEditComponent, {
       width: '600px',
       data: { record: value },
     });

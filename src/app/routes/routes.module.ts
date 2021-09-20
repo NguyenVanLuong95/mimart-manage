@@ -16,6 +16,7 @@ import { CategoryAddEditComponent } from './categories/category_add_edit/categor
 import { ProductAddEditComponent } from './products/product_add_edit/product_add_edit.component';
 import { NotificationAddEditComponent } from './notifications/notification_add_edit/notification_add_edit.component';
 import { ReportsComponent } from './reports/reports.component';
+import { UserAddEditComponent } from './users/user_add_edit/user_add_edit.component';
 
 const COMPONENTS: any[] = [DashboardComponent, LoginComponent, RegisterComponent];
 const COMPONENTS_DYNAMIC: any[] = [];
@@ -34,7 +35,8 @@ const COMPONENTS_DYNAMIC: any[] = [];
     CategoryAddEditComponent,
     ProductAddEditComponent,
     NotificationAddEditComponent,
-    ReportsComponent
+    ReportsComponent,
+    UserAddEditComponent
   ],
   entryComponents: COMPONENTS_DYNAMIC,
 })
