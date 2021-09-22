@@ -24,6 +24,6 @@ export class OrdersService {
     return this.http.get<any>(`${baseUrl.baseUrl}/api/process-order/${id}`);
   }
   onSendShipped(id: number): Observable<any> {
-    return this.http.get<any>(`${baseUrl.baseUrl}/api/done-order/${id}`);
+    return this.http.get<any>(`${baseUrl.baseUrl}/api/complete-order/${id}`);
   }
 }
