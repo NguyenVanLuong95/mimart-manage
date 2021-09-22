@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="!checkForm">
   <mat-card-title>Thêm mới thông báo</mat-card-title>
 
   <form [formGroup]="addNotificationForm">
@@ -18,7 +18,37 @@
     <div fxLayout="row wrap" class="matero-row" style="margin-top: 1%;">
       <div fxFlex="66.67" fxFlex.lt-sm="100" class="matero-col"></div>
       <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
-        <button mat-raised-button color="primary" (click)="onSave()" [disabled]="addNotificationForm.invalid">Lưu</button>
+        <button mat-raised-button color="primary" (click)="onSave()"
+                [disabled]="addNotificationForm.invalid">Lưu</button>
+        <button mat-raised-button color="primary" (click)="onClose()"
+                style="margin-left: 1%;">Đóng</button>
+      </div>
+    </div>
+  </form>
+</mat-card>
+
+<mat-card *ngIf="checkForm">
+  <mat-card-title>Cập nhật thông báo</mat-card-title>
+
+  <form [formGroup]="addNotificationForm">
+    <div fxLayout="row wrap" class="matero-row">
+      <mat-form-field class="m-r-8">
+        <input matInput placeholder="Tiêu đề" formControlName="title"
+               name="title" />
+      </mat-form-field>
+    </div>
+    <div fxLayout="row wrap" class="matero-row">
+      <mat-form-field class="m-r-8">
+        <input matInput placeholder="Nội dung" formControlName="content"
+               name="content" />
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row wrap" class="matero-row" style="margin-top: 1%;">
+      <div fxFlex="66.67" fxFlex.lt-sm="100" class="matero-col"></div>
+      <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
+        <button mat-raised-button color="primary" (click)="onSaveEdit()"
+                [disabled]="addNotificationForm.invalid">Lưu</button>
         <button mat-raised-button color="primary" (click)="onClose()"
                 style="margin-left: 1%;">Đóng</button>
       </div>

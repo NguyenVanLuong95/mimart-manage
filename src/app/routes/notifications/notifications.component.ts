@@ -4,7 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
 import { TranslateService } from '@ngx-translate/core';
 import * as moment from 'moment';
-import { TablesKitchenSinkEditComponent } from '../tables/kitchen-sink/edit/edit.component';
+import { ToastrService } from 'ngx-toastr';
 import { NotificationsService } from './notifications.service';
 import { NotificationAddEditComponent } from './notification_add_edit/notification_add_edit.component';
 
@@ -53,7 +53,7 @@ export class NotificationsComponent implements OnInit {
       ],
     },
   ];
-  constructor(private fb: FormBuilder, private serviceNotifications: NotificationsService, private cdr: ChangeDetectorRef, public dialog: MtxDialog, private translate: TranslateService) { }
+  constructor(private fb: FormBuilder, private serviceNotifications: NotificationsService, private cdr: ChangeDetectorRef, public dialog: MtxDialog, private translate: TranslateService, private toastr: ToastrService) { }
   ngOnInit(): void {
     this.notificationsForm = this.fb.group({
       title: [''],
@@ -112,12 +112,20 @@ export class NotificationsComponent implements OnInit {
   }
 
   edit(value: any) {
-    const dialogRef = this.dialog.originalOpen(TablesKitchenSinkEditComponent, {
+    const dialogRef = this.dialog.originalOpen(NotificationAddEditComponent, {
       width: '600px',
       data: { record: value },
     });
   }
   delete(value: any) {
-    this.dialog.alert(`You have deleted ${value.position}!`);
+    if (value.id) {
+      this.serviceNotifications.onDelete(value.id).subscribe(res => {
+        if (res) {
+          this.toastr.success("Xóa thông báo thành công!");
+        } else {
+          this.toastr.success("Xóa thông báo thất bại!");
+        }
+      })
+    }
   }
 }

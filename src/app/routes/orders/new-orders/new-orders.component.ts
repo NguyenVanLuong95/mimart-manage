@@ -20,6 +20,9 @@ export class NewOrdersComponent implements OnInit {
     size: 10,
   };
   columns: MtxGridColumn[] = [
+    { header: 'Tên khách hàng', field: 'customerName' },
+    { header: 'Địa chỉ', field: 'customerAdrress' },
+    { header: 'Số điện thoại', field: 'customerPhone' },
     { header: 'Mã đơn hàng', field: 'orderCode' },
     { header: 'Ngày tạo', field: 'createdDate' },
     { header: 'Tổng giá', field: 'totalAmount', type: 'number' },
@@ -40,7 +43,7 @@ export class NewOrdersComponent implements OnInit {
       ],
     },
   ];
-  constructor(private fb: FormBuilder, private serviceOrders: OrdersService, private cdr: ChangeDetectorRef, public dialog: MtxDialog,) { }
+  constructor(private fb: FormBuilder, private serviceOrders: OrdersService, private cdr: ChangeDetectorRef, public dialog: MtxDialog) { }
   ngOnInit(): void {
     this.newOrdersForm = this.fb.group({
       code: [''],
@@ -87,7 +90,7 @@ export class NewOrdersComponent implements OnInit {
   edit(value: any) {
     const dialogRef = this.dialog.originalOpen(NewOrdersDetailComponent, {
       width: '600px',
-      data: { record: value.productList },
+      data: { record: value.productList, orderId: value.billId },
     });
   }
 }

@@ -19,6 +19,9 @@ export class CanceledComponent implements OnInit {
     size: 10,
   };
   columns: MtxGridColumn[] = [
+    { header: 'Tên khách hàng', field: 'customerName' },
+    { header: 'Địa chỉ', field: 'customerAdrress' },
+    { header: 'Số điện thoại', field: 'customerPhone' },
     { header: 'Mã đơn hàng', field: 'orderCode' },
     { header: 'Ngày tạo', field: 'createdDate' },
     { header: 'Tổng giá', field: 'totalAmount', type: 'number' },

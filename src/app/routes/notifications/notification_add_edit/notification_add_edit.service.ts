@@ -10,4 +10,8 @@ export class NotificationAddEditService {
   onSave(body): Observable<any> {
     return this.http.post<any>(`${baseUrl.baseUrl}/api/notifycation`, body);
   }
+
+  onSaveEdit(body): Observable<any> {
+    return this.http.put<any>(`${baseUrl.baseUrl}/api/notifycation`, body);
+  }
 }
