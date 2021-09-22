@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
@@ -10,6 +10,8 @@ import { NotificationAddEditService } from './notification_add_edit.service';
 })
 export class NotificationAddEditComponent implements OnInit {
   addNotificationForm = new FormGroup({});
+  checkForm: boolean = false;
+  id: any;
 
   constructor(
     private fb: FormBuilder,
@@ -24,6 +26,14 @@ export class NotificationAddEditComponent implements OnInit {
       title: ['', Validators.required],
       content: ['', Validators.required]
     });
+    if (this.data) {
+      this.checkForm = true;
+      this.id = this.data.record.id;
+      this.addNotificationForm.controls['title'].setValue(this.data.record.title);
+      this.addNotificationForm.controls['content'].setValue(this.data.record.content);
+    } else {
+      this.checkForm = false;
+    }
   }
 
   onClose(): void {
@@ -41,6 +51,22 @@ export class NotificationAddEditComponent implements OnInit {
         this.onClose();
       } else {
         this.toastr.error("Thêm mới thông báo thất bại!")
+      }
+    });
+  }
+
+  onSaveEdit() {
+    const body = {
+      'id': this.id,
+      'title': this.addNotificationForm.controls.title.value,
+      'content': this.addNotificationForm.controls.content.value
+    }
+    this.notificationAddEditService.onSaveEdit(body).subscribe(res => {
+      if (res) {
+        this.toastr.success("Cập nhật thông báo thành công!");
+        this.onClose();
+      } else {
+        this.toastr.error("Cập nhật thông báo thất bại!")
       }
     });
   }

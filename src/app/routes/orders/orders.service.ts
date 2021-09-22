@@ -20,4 +20,10 @@ export class OrdersService {
   getListCanceledOrders(params = {}): Observable<any> {
     return this.http.get<any>(`${baseUrl.baseUrl}/api/cancel-orders`, { params });
   }
+  onSendShipping(id: number): Observable<any> {
+    return this.http.get<any>(`${baseUrl.baseUrl}/api/process-order/${id}`);
+  }
+  onSendShipped(id: number): Observable<any> {
+    return this.http.get<any>(`${baseUrl.baseUrl}/api/done-order/${id}`);
+  }
 }

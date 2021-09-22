@@ -11,4 +11,8 @@ export class NotificationsService {
   getListNotifications(params = {}): Observable<any> {
     return this.http.get<any>(`${baseUrl.baseUrl}/api/all-notifycations`, { params });
   }
+
+  onDelete(id): Observable<any> {
+    return this.http.delete<any>(`${baseUrl.baseUrl}/api/notifycation/${id}`);
+  }
 }

@@ -1,10 +1,11 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { MtxGridColumn } from '@ng-matero/extensions';
+import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
 import { UsersService } from 'app/routes/users/users.service';
 import * as moment from 'moment';
 import { OrdersService } from '../orders.service';
+import { ShippedDetailComponent } from '../shipped-detail/shipped-detail.component';
 
 @Component({
   selector: 'app-orders-shipped',
@@ -20,11 +21,30 @@ export class ShippedComponent implements OnInit {
     size: 10,
   };
   columns: MtxGridColumn[] = [
+    { header: 'Tên khách hàng', field: 'customerName' },
+    { header: 'Địa chỉ', field: 'customerAdrress' },
+    { header: 'Số điện thoại', field: 'customerPhone' },
     { header: 'Mã đơn hàng', field: 'orderCode' },
     { header: 'Ngày tạo', field: 'createdDate' },
     { header: 'Tổng giá', field: 'totalAmount', type: 'number' },
+    {
+      header: 'Hành động',
+      field: 'operation',
+      minWidth: 120,
+      width: '10%',
+      pinned: 'right',
+      type: 'button',
+      buttons: [
+        {
+          type: 'icon',
+          icon: 'remove_red_eye',
+          tooltip: 'Sửa',
+          click: record => this.edit(record),
+        },
+      ],
+    },
   ];
-  constructor(private fb: FormBuilder, private serviceOrders: OrdersService, private cdr: ChangeDetectorRef) { }
+  constructor(private fb: FormBuilder, private serviceOrders: OrdersService, private cdr: ChangeDetectorRef, public dialog: MtxDialog) { }
   ngOnInit(): void {
     this.shippedForm = this.fb.group({
       code: [''],
@@ -67,5 +87,12 @@ export class ShippedComponent implements OnInit {
       Object.assign(this.query, { code: this.shippedForm.controls['code'].value })
     }
     this.getListShippedOrders();
+  }
+
+  edit(value: any) {
+    const dialogRef = this.dialog.originalOpen(ShippedDetailComponent, {
+      width: '600px',
+      data: { record: value.productList, orderId: value.billId },
+    });
   }
 }
