@@ -11,6 +11,7 @@ import { OrdersService } from '../orders.service';
 export class NewOrdersDetailComponent implements OnInit {
   newOrdersForm!: FormGroup;
   list: any[] = [];
+  orderId: any;
   total = 0;
   query = {
     page: 0,
@@ -25,6 +26,7 @@ export class NewOrdersDetailComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.getData();
+    this.orderId = this.data.orderId;
   }
 
   getData() {
@@ -42,5 +44,16 @@ export class NewOrdersDetailComponent implements OnInit {
 
   onClose(): void {
     this.dialogRef.close();
+  }
+
+  onSend(): void {
+    this.orderService.onSend(this.orderId).subscribe(res => {
+      if (res) {
+        this.toastr.success("Xác nhận đơn hàng đang giao thành công!");
+        this.onClose()
+      } else {
+        this.toastr.success("Xác nhận đơn hàng đang giao thất bại!");
+      }
+    })
   }
 }

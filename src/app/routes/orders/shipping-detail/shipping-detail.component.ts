@@ -45,8 +45,9 @@ export class ShippingDetailComponent implements OnInit {
   onClose(): void {
     this.dialogRef.close();
   }
-  onSendShipping(): void {
-    this.orderService.onSendShipping(this.orderId).subscribe(res => {
+  
+  onSendComplete(): void {
+    this.orderService.onSendComplete(this.orderId).subscribe(res => {
       if (res) {
         this.toastr.success("Đơn hàng giao thành công!");
         this.onClose()
