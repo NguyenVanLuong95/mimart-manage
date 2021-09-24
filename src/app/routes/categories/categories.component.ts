@@ -97,7 +97,7 @@ export class CategoriesComponent implements OnInit {
   }
 
   edit(value: any) {
-    const dialogRef = this.dialog.originalOpen(TablesKitchenSinkEditComponent, {
+    const dialogRef = this.dialog.originalOpen(CategoryAddEditComponent, {
       width: '600px',
       data: { record: value },
     });

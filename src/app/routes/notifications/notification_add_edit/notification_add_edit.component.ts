@@ -12,7 +12,6 @@ export class NotificationAddEditComponent implements OnInit {
   addNotificationForm = new FormGroup({});
   checkForm: boolean = false;
   id: any;
-
   constructor(
     private fb: FormBuilder,
     private notificationAddEditService: NotificationAddEditService,

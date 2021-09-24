@@ -10,4 +10,7 @@ export class CategoryAddEditService {
   onSave(body): Observable<any> {
     return this.http.post<any>(`${baseUrl.baseUrl}/api/category`, body);
   }
+  // onSaveEdit(body): Observable<any> {
+  //   return this.http.post<any>(`${baseUrl.baseUrl}/api/category`, body);
+  // }
 }
