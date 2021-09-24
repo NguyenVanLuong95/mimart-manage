@@ -13,7 +13,8 @@ export class CategoryAddEditComponent implements OnInit {
   @ViewChild('fileInput')
   fileInput;
   file!: File;
-
+  checkForm: boolean = false;
+  id: any;
   constructor(
     private fb: FormBuilder,
     private categoryAddEditService: CategoryAddEditService,
@@ -27,6 +28,13 @@ export class CategoryAddEditComponent implements OnInit {
       categoryName: ['', Validators.required],
       categoryImage: ['']
     });
+    if (this.data) {
+      this.checkForm = true;
+      this.id = this.data.record.id;
+      this.addCategoryForm.controls['categoryName'].setValue(this.data.record.categoryName);
+    } else {
+      this.checkForm = false;
+    }
   }
 
   onClose(): void {
@@ -52,5 +60,19 @@ export class CategoryAddEditComponent implements OnInit {
         this.toastr.error("Thêm mới danh mục thất bại!")
       }
     });
+  }
+
+  onSaveEdit() {
+    const formData = new FormData();
+    formData.append('categoryImage', this.file);
+    formData.append('categoryName', this.addCategoryForm.controls.categoryName.value);
+    // this.categoryAddEditService.onSaveEdit(formData).subscribe(res => {
+    //   if (res) {
+    //     this.toastr.success("Cập nhật danh mục thành công!");
+    //     this.onClose();
+    //   } else {
+    //     this.toastr.error("Cập nhật danh mục thất bại!")
+    //   }
+    // });
   }
 }

@@ -10,4 +10,8 @@ export class ProductAddEditService {
   onSave(body): Observable<any> {
     return this.http.post<any>(`${baseUrl.baseUrl}/api/product`, body);
   }
+
+  // onSaveEdit(body): Observable<any> {
+  //   return this.http.post<any>(`${baseUrl.baseUrl}/api/product`, body);
+  // }
 }
