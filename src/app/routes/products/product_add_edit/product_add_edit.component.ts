@@ -39,7 +39,7 @@ export class ProductAddEditComponent implements OnInit {
       this.id = this.data.record.productId;
       this.addProductForm.controls['productName'].setValue(this.data.record.productName);
       this.addProductForm.controls['unitPrice'].setValue(this.data.record.unitPrice);
-      this.addProductForm.controls['category'].setValue(this.data.record.content);
+      this.addProductForm.controls['category'].setValue(this.data.record.categoryId);
     } else {
       this.checkForm = false;
       this.addProductForm.controls['category'].setValue(1);

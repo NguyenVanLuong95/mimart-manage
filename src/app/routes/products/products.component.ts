@@ -6,6 +6,7 @@ import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
 import { ProductsService } from './products.service';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductAddEditComponent } from './product_add_edit/product_add_edit.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-products',
@@ -55,7 +56,7 @@ export class ProductsComponent implements OnInit {
       ],
     },
   ];
-  constructor(private fb: FormBuilder, private serviceProducts: ProductsService, private cdr: ChangeDetectorRef, private route: ActivatedRoute, public dialog: MtxDialog, private translate: TranslateService,) { }
+  constructor(private fb: FormBuilder, private toastr: ToastrService, private serviceProducts: ProductsService, public dialog: MtxDialog, private translate: TranslateService,) { }
   ngOnInit(): void {
     this.productsForm = this.fb.group({
       productName: [''],
@@ -107,7 +108,15 @@ export class ProductsComponent implements OnInit {
     });
   }
   delete(value: any) {
-    this.dialog.alert(`You have deleted ${value.position}!`);
+    if (value.productId) {
+      this.serviceProducts.delete(value.productId).subscribe(res => {
+        if (res) {
+          this.toastr.success("Xóa sản phẩm thành công!");
+        } else {
+          this.toastr.success("Xóa sản phẩm thất bại!");
+        }
+      })
+    }
   }
   addProduct() {
     const dialogRef = this.dialog.originalOpen(ProductAddEditComponent, {

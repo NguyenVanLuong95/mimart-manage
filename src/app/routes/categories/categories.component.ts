@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { TablesKitchenSinkEditComponent } from '../tables/kitchen-sink/edit/edit.component';
 import { Router } from '@angular/router';
 import { CategoryAddEditComponent } from './category_add_edit/category_add_edit.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-categories',
@@ -52,7 +53,7 @@ export class CategoriesComponent implements OnInit {
       ],
     },
   ];
-  constructor(private fb: FormBuilder, private servicecategories: CategoriesService, private cdr: ChangeDetectorRef, private translate: TranslateService, public dialog: MtxDialog, private router: Router) { }
+  constructor(private fb: FormBuilder, private servicecategories: CategoriesService, private toastr: ToastrService, private translate: TranslateService, public dialog: MtxDialog, private router: Router) { }
   ngOnInit(): void {
     this.categoriesForm = this.fb.group({
       name: [''],
@@ -103,7 +104,15 @@ export class CategoriesComponent implements OnInit {
     });
   }
   delete(value: any) {
-    this.dialog.alert(`You have deleted ${value.position}!`);
+    if (value.id) {
+      this.servicecategories.delete(value.id).subscribe(res => {
+        if (res) {
+          this.toastr.success("Xóa danh mục thành công!");
+        } else {
+          this.toastr.success("Xóa danh mục thất bại!");
+        }
+      })
+    }
   }
   // nextProductsPage(value: any) {
   //   if (value.id) {
