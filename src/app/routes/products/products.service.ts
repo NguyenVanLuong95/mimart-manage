@@ -10,4 +10,7 @@ export class ProductsService {
   getListProducts(params = {}): Observable<any> {
     return this.http.get<any>(`${baseUrl.baseUrl}/api/search-products`, { params });
   }
+  delete(id): Observable<any> {
+    return this.http.delete<any>(`${baseUrl.baseUrl}/api/delete-product/${id}`);
+  }
 }

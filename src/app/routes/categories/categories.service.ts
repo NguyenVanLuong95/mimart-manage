@@ -10,4 +10,7 @@ export class CategoriesService {
   getListCategories(params = {}): Observable<any> {
     return this.http.get<any>(`${baseUrl.baseUrl}/api/all-category`, { params });
   }
+  delete(id): Observable<any> {
+    return this.http.delete<any>(`${baseUrl.baseUrl}/api/category/${id}`);
+  }
 }

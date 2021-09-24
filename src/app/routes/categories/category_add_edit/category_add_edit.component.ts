@@ -64,15 +64,16 @@ export class CategoryAddEditComponent implements OnInit {
 
   onSaveEdit() {
     const formData = new FormData();
+    formData.append('categoryId', this.id);
     formData.append('categoryImage', this.file);
     formData.append('categoryName', this.addCategoryForm.controls.categoryName.value);
-    // this.categoryAddEditService.onSaveEdit(formData).subscribe(res => {
-    //   if (res) {
-    //     this.toastr.success("Cập nhật danh mục thành công!");
-    //     this.onClose();
-    //   } else {
-    //     this.toastr.error("Cập nhật danh mục thất bại!")
-    //   }
-    // });
+    this.categoryAddEditService.onSaveEdit(formData).subscribe(res => {
+      if (res) {
+        this.toastr.success("Cập nhật danh mục thành công!");
+        this.onClose();
+      } else {
+        this.toastr.error("Cập nhật danh mục thất bại!")
+      }
+    });
   }
 }
