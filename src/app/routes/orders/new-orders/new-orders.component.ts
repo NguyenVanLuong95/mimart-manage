@@ -5,6 +5,7 @@ import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
 import * as moment from 'moment';
 import { NewOrdersDetailComponent } from '../new-orders-detail/new-orders-detail.component';
 import { OrdersService } from '../orders.service';
+import * as fileSaver from 'file-saver';
 
 @Component({
   selector: 'app-orders-new-orders',
@@ -37,8 +38,14 @@ export class NewOrdersComponent implements OnInit {
         {
           type: 'icon',
           icon: 'remove_red_eye',
-          tooltip: 'Sửa',
+          tooltip: 'Xem chi tiết đơn hàng',
           click: record => this.edit(record),
+        },
+        {
+          type: 'icon',
+          icon: 'panorama_fish_eye',
+          tooltip: 'Xem hóa đơn',
+          click: record => this.viewBill(record),
         },
       ],
     },
@@ -92,5 +99,17 @@ export class NewOrdersComponent implements OnInit {
       width: '600px',
       data: { record: value.productList, orderId: value.billId },
     });
+  }
+  viewBill(value: any) {
+    if (value.billId) {
+      this.serviceOrders.viewBill(value.billId).subscribe((res: any) => {
+        let blob: any = new Blob([res], { type: 'text/json; charset=utf-8' });
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+        //window.location.href = response.url;
+        fileSaver.saveAs(blob, 'employees.pdf');
+      }), error => console.log('Error downloading the file'),
+        () => console.info('File downloaded successfully');
+    };
   }
 }

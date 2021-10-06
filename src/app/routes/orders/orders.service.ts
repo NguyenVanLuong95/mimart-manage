@@ -26,4 +26,7 @@ export class OrdersService {
   onSendComplete(id: number): Observable<any> {
     return this.http.get<any>(`${baseUrl.baseUrl}/api/complete-order/${id}`);
   }
+  viewBill(id: Number): any {
+    return this.http.get<any>(`${baseUrl.baseUrl}/api/billing-preview/${id}`);
+  }
 }

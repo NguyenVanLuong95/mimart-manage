@@ -1,5 +1,15 @@
 <page-header></page-header>
 
-<div fxLayout="row wrap" class="matero-row">
-  <p>Chức năng đang phát triển</p>
-</div>
+<form [formGroup]="reportForm">
+  <div fxLayout="row wrap" class="matero-row">
+    <div fxFlex="50" fxFlex.lt-sm="100">
+      <mat-form-field>
+        <mat-select required formControlName="story">
+          <mat-option *ngFor="let item of listStories" [value]="item.id">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</form>
