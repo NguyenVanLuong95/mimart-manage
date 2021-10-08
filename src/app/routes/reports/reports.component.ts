@@ -9,6 +9,7 @@ export class ReportsComponent implements OnInit {
   listStories: any;
   listReport: any;
   reportForm = new FormGroup({});
+  displayedColumns = ['productName', 'unitPrice', 'inventoryQuantity', 'discount', 'soldQuantity', 'revenue'];
   constructor(
     private reportService: ReportsService,
     private fb: FormBuilder
@@ -31,5 +32,8 @@ export class ReportsComponent implements OnInit {
     this.reportService.getReport(this.reportForm.controls['story'].value).subscribe(res => {
       this.listReport = res.content;
     })
+  }
+  onValueChange(event) {
+    this.getReport();
   }
 }
