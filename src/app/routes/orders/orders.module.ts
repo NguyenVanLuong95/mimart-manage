@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared/shared.module';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { CanceledComponent } from './canceled/canceled.component';
 import { NewOrdersDetailComponent } from './new-orders-detail/new-orders-detail.component';
 import { NewOrdersComponent } from './new-orders/new-orders.component';
@@ -12,7 +13,7 @@ const COMPONENTS: any[] = [NewOrdersComponent, ShippingComponent, ShippedCompone
 const COMPONENTS_DYNAMIC: any[] = [];
 
 @NgModule({
-  imports: [SharedModule, OrdersRoutingModule],
+  imports: [SharedModule, OrdersRoutingModule, PdfViewerModule],
   declarations: [...COMPONENTS, ...COMPONENTS_DYNAMIC],
   entryComponents: COMPONENTS_DYNAMIC,
 })
