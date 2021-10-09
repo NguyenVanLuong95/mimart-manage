@@ -4,9 +4,8 @@
   <div fxLayout="row wrap" class="matero-row">
     <div fxFlex="50" fxFlex.lt-sm="100">
       <mat-form-field>
-        <mat-select required formControlName="story">
-          <mat-option *ngFor="let item of listStories" [value]="item.id"
-                      (selectionChange)="onValueChange($event)">
+        <mat-select required formControlName="story" (selectionChange)="onValueChange($event)">
+          <mat-option *ngFor="let item of listStories" [value]="item.id">
             {{item.name}}
           </mat-option>
         </mat-select>
@@ -15,7 +14,7 @@
   </div>
 
   <mat-card>
-    <mat-card-title>Báo cáo doanh thu</mat-card-title>
+    <mat-card-title>Báo cáo doanh thu {{storyName ? storyName : ''}}</mat-card-title>
     <mat-table aria-readonly="true"
                [dataSource]="listReport"
                aria-label="Users favorite colors and age">

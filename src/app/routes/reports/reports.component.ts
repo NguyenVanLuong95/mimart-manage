@@ -8,6 +8,8 @@ import { ReportsService } from './reports.service';
 export class ReportsComponent implements OnInit {
   listStories: any;
   listReport: any;
+  storyId = {};
+  storyName!: string;
   reportForm = new FormGroup({});
   displayedColumns = ['productName', 'unitPrice', 'inventoryQuantity', 'discount', 'soldQuantity', 'revenue'];
   constructor(
@@ -20,7 +22,10 @@ export class ReportsComponent implements OnInit {
     });
     this.getListStories();
     this.reportForm.controls['story'].setValue(1);
-    this.getReport()
+    if (this.listStories) {
+      this.storyName = this.listStories.find(x => x.id == 1).name;
+    }
+    this.getReport(this.reportForm.controls['story'].value)
   }
 
   getListStories() {
@@ -28,12 +33,16 @@ export class ReportsComponent implements OnInit {
       this.listStories = res
     })
   }
-  getReport() {
-    this.reportService.getReport(this.reportForm.controls['story'].value).subscribe(res => {
+  getReport(storyId) {
+    this.reportService.getReport(storyId).subscribe(res => {
       this.listReport = res.content;
     })
   }
   onValueChange(event) {
-    this.getReport();
+    if (event.value) {
+      this.storyId = event.value
+      this.storyName = this.listStories.find(x => x.id == this.storyId).name;
+      this.getReport(this.storyId);
+    }
   }
 }

@@ -5,7 +5,6 @@ import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
 import * as moment from 'moment';
 import { NewOrdersDetailComponent } from '../new-orders-detail/new-orders-detail.component';
 import { OrdersService } from '../orders.service';
-import * as fileSaver from 'file-saver';
 
 @Component({
   selector: 'app-orders-new-orders',
@@ -20,6 +19,7 @@ export class NewOrdersComponent implements OnInit {
     page: 0,
     size: 10,
   };
+  pdfSrc = {}
   columns: MtxGridColumn[] = [
     { header: 'Tên khách hàng', field: 'customerName' },
     { header: 'Địa chỉ', field: 'customerAdrress' },
@@ -102,14 +102,9 @@ export class NewOrdersComponent implements OnInit {
   }
   viewBill(value: any) {
     if (value.billId) {
-      this.serviceOrders.viewBill(value.billId).subscribe((res: any) => {
-        let blob: any = new Blob([res], { type: 'text/json; charset=utf-8' });
-        const url = window.URL.createObjectURL(blob);
-        window.open(url);
-        //window.location.href = response.url;
-        fileSaver.saveAs(blob, 'employees.pdf');
-      }), error => console.log('Error downloading the file'),
-        () => console.info('File downloaded successfully');
+      this.serviceOrders.viewBill(value.billId).subscribe(res => {
+        this.pdfSrc = res
+      })
     };
   }
 }

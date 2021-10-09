@@ -27,6 +27,6 @@ export class OrdersService {
     return this.http.get<any>(`${baseUrl.baseUrl}/api/complete-order/${id}`);
   }
   viewBill(id: Number): any {
-    return this.http.get<any>(`${baseUrl.baseUrl}/api/billing-preview/${id}`);
+    return this.http.get(`${baseUrl.baseUrl}/api/billing-preview/${id}`, {responseType:'blob'});
   }
 }
