@@ -5,6 +5,7 @@ import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
 import * as moment from 'moment';
 import { NewOrdersDetailComponent } from '../new-orders-detail/new-orders-detail.component';
 import { OrdersService } from '../orders.service';
+import { ViewPdfComponent } from '../view-pdf/view-pdf.component';
 
 @Component({
   selector: 'app-orders-new-orders',
@@ -103,8 +104,16 @@ export class NewOrdersComponent implements OnInit {
   viewBill(value: any) {
     if (value.billId) {
       this.serviceOrders.viewBill(value.billId).subscribe(res => {
-        this.pdfSrc = res
+        const reader = new FileReader();
+        const binaryString = reader.readAsDataURL(res);
+        reader.onload = (event: any) => {
+          this.pdfSrc = event.target.result;
+          const dialogRef = this.dialog.originalOpen(ViewPdfComponent, {
+            width: '600px',
+            data: { pdf_Src: this.pdfSrc },
+          });
+        };
       })
-    };
+    }
   }
 }
