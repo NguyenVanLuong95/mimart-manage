@@ -16,6 +16,7 @@ export class ProductAddEditComponent implements OnInit {
   checkForm: boolean = false;
   file!: File;
   listCategory: any;
+  listBuildings: any;
   id: any;
   constructor(
     private fb: FormBuilder,
@@ -31,18 +32,22 @@ export class ProductAddEditComponent implements OnInit {
       productName: ['', Validators.required],
       unitPrice: ['', Validators.required],
       productImage: [''],
-      category: ['', Validators.required]
+      category: ['', Validators.required],
+      building: ['', Validators.required]
     });
     this.getListCategories();
+    this.getAllBuildings();
     if (this.data) {
       this.checkForm = true;
       this.id = this.data.record.productId;
       this.addProductForm.controls['productName'].setValue(this.data.record.productName);
       this.addProductForm.controls['unitPrice'].setValue(this.data.record.unitPrice);
       this.addProductForm.controls['category'].setValue(this.data.record.categoryId);
+      this.addProductForm.controls['building'].setValue(this.data.record.buildingId)
     } else {
       this.checkForm = false;
       this.addProductForm.controls['category'].setValue(1);
+      this.addProductForm.controls['building'].setValue(1);
     }
   }
 
@@ -69,6 +74,7 @@ export class ProductAddEditComponent implements OnInit {
     formData.append('productImage', this.file);
     formData.append('productName', this.addProductForm.controls.productName.value);
     formData.append('unitPrice', this.addProductForm.controls.unitPrice.value);
+    formData.append('buildingId', this.addProductForm.controls.building.value);
     this.productAddEditService.onSave(formData).subscribe(res => {
       if (res) {
         this.toastr.success("Thêm mới sản phẩm thành công!");
@@ -85,6 +91,7 @@ export class ProductAddEditComponent implements OnInit {
     formData.append('productImage', this.file);
     formData.append('productName', this.addProductForm.controls.productName.value);
     formData.append('unitPrice', this.addProductForm.controls.unitPrice.value);
+    formData.append('buildingId', this.addProductForm.controls.building.value);
     // this.productAddEditService.onSaveEdit(formData).subscribe(res => {
     //   if (res) {
     //     this.toastr.success("Cập nhật sản phẩm thành công!");
@@ -94,4 +101,11 @@ export class ProductAddEditComponent implements OnInit {
     //   }
     // });
   }
+
+  getAllBuildings() {
+    this.productAddEditService.getAllBuilding().subscribe(res => {
+      this.listBuildings = res;
+    })
+  }
+
 }

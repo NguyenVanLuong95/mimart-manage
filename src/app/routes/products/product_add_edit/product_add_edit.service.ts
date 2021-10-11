@@ -14,4 +14,8 @@ export class ProductAddEditService {
   // onSaveEdit(body): Observable<any> {
   //   return this.http.post<any>(`${baseUrl.baseUrl}/api/product`, body);
   // }
+
+  getAllBuilding() {
+    return this.http.get(`${baseUrl.baseUrl}/api/building-list`);
+  }
 }

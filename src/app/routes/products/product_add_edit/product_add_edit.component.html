@@ -25,6 +25,16 @@
     <div fxLayout="row wrap" class="matero-row">
       <div fxFlex="50" fxFlex.lt-sm="100">
         <mat-form-field>
+          <mat-select required formControlName="building">
+            <mat-option *ngFor="let item of listBuildings" [value]="item.id">
+              {{item.buildingName}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row wrap" class="matero-row">
+      <div fxFlex="50" fxFlex.lt-sm="100">
+        <mat-form-field>
           <mat-select required formControlName="category">
             <mat-option *ngFor="let item of listCategory" [value]="item.id">
               {{item.categoryName}}</mat-option>
@@ -82,6 +92,16 @@
                  placeholder="Giá sản phẩm"
                  formControlName="unitPrice"
                  name="unitPrice" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row wrap" class="matero-row">
+      <div fxFlex="50" fxFlex.lt-sm="100">
+        <mat-form-field>
+          <mat-select required formControlName="building">
+            <mat-option *ngFor="let item of listBuildings" [value]="item.id">
+              {{item.buildingName}}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </div>
