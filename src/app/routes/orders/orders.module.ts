@@ -8,8 +8,9 @@ import { OrdersRoutingModule } from './orders-routing.module';
 import { ShippedComponent } from './shipped/shipped.component';
 import { ShippingDetailComponent } from './shipping-detail/shipping-detail.component';
 import { ShippingComponent } from './shipping/shipping.component';
+import { ViewPdfComponent } from './view-pdf/view-pdf.component';
 
-const COMPONENTS: any[] = [NewOrdersComponent, ShippingComponent, ShippedComponent, CanceledComponent, NewOrdersDetailComponent, ShippingDetailComponent];
+const COMPONENTS: any[] = [NewOrdersComponent, ShippingComponent, ShippedComponent, CanceledComponent, NewOrdersDetailComponent, ShippingDetailComponent, ViewPdfComponent];
 const COMPONENTS_DYNAMIC: any[] = [];
 
 @NgModule({
