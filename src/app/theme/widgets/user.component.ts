@@ -35,7 +35,7 @@ import { User } from '@core/authentication/interface';
 export class UserComponent implements OnInit {
   user!: User;
 
-  constructor(private router: Router, private auth: AuthService, private cdr: ChangeDetectorRef) {}
+  constructor(private router: Router, private auth: AuthService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.auth
@@ -48,6 +48,8 @@ export class UserComponent implements OnInit {
   }
 
   logout() {
-    this.auth.logout().subscribe(() => this.router.navigateByUrl('/auth/login'));
+    // this.auth.logout().subscribe(() => 
+    this.router.navigateByUrl('/auth/login')
+    // );
   }
 }
