@@ -28,6 +28,8 @@ export class ProductsComponent implements OnInit {
     { header: 'Giá sản phẩm', field: 'unitPrice' },
     // { header: 'Hình ảnh', field: 'productImageUrl', type: 'image' },
     { header: 'Danh mục', field: 'categoryName' },
+    { header: 'Tòa nhà', field: 'buildingName' },
+    { header: 'Cửa hàng', field: 'storeName' },
     {
       header: 'Hành động',
       field: 'operation',
