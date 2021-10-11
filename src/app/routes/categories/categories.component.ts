@@ -1,10 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
 import { CategoriesService } from './categories.service';
 import { TranslateService } from '@ngx-translate/core';
-import { TablesKitchenSinkEditComponent } from '../tables/kitchen-sink/edit/edit.component';
 import { Router } from '@angular/router';
 import { CategoryAddEditComponent } from './category_add_edit/category_add_edit.component';
 import { ToastrService } from 'ngx-toastr';
