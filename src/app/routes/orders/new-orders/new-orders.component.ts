@@ -48,6 +48,12 @@ export class NewOrdersComponent implements OnInit {
           tooltip: 'Xem hóa đơn',
           click: record => this.viewBill(record),
         },
+        {
+          type: 'icon',
+          icon: 'cloud_download',
+          tooltip: 'Tải hóa đơn',
+          click: record => this.downloadBill(record),
+        },
       ],
     },
   ];
@@ -115,5 +121,8 @@ export class NewOrdersComponent implements OnInit {
         };
       })
     }
+  }
+  downloadBill(value: any) {
+
   }
 }
