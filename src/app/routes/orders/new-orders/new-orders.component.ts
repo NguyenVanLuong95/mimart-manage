@@ -16,6 +16,7 @@ export class NewOrdersComponent implements OnInit {
   list: any[] = [];
   total = 0;
   isLoading = true;
+  FileSaver = require('file-saver');
   query = {
     page: 0,
     size: 10,
@@ -123,6 +124,15 @@ export class NewOrdersComponent implements OnInit {
     }
   }
   downloadBill(value: any) {
-
+    if (value.billId) {
+      this.serviceOrders.viewBill(value.billId).subscribe(res => {
+        const reader = new FileReader();
+        const binaryString = reader.readAsDataURL(res);
+        reader.onload = (event: any) => {
+          this.pdfSrc = event.target.result;
+          this.FileSaver.saveAs(this.pdfSrc, value.customerName + '_' + value.orderCode);
+        };
+      })
+    }
   }
 }
