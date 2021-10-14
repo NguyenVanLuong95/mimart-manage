@@ -15,6 +15,8 @@ export class CategoryAddEditComponent implements OnInit {
   file!: File;
   checkForm: boolean = false;
   id: any;
+  imagePath: any;
+  showImage = true;
   constructor(
     private fb: FormBuilder,
     private categoryAddEditService: CategoryAddEditService,
@@ -26,12 +28,13 @@ export class CategoryAddEditComponent implements OnInit {
   ngOnInit() {
     this.addCategoryForm = this.fb.group({
       categoryName: ['', Validators.required],
-      categoryImage: ['']
+      categoryImage: ['File | null']
     });
     if (this.data) {
       this.checkForm = true;
       this.id = this.data.record.id;
       this.addCategoryForm.controls['categoryName'].setValue(this.data.record.categoryName);
+      this.imagePath = this.data.record.categoryImageUrl;
     } else {
       this.checkForm = false;
     }
@@ -44,6 +47,9 @@ export class CategoryAddEditComponent implements OnInit {
   onChangeFileInput(): void {
     const files: { [key: string]: File } = this.fileInput.nativeElement.files;
     this.file = files[0];
+    if (this.file) {
+      this.showImage = false;
+    }
   }
   onClickFileInputButton(): void {
     this.fileInput.nativeElement.click();
@@ -65,8 +71,13 @@ export class CategoryAddEditComponent implements OnInit {
   onSaveEdit() {
     const formData = new FormData();
     formData.append('categoryId', this.id);
-    formData.append('categoryImage', this.file);
+    if (this.file == undefined) {
+      formData.append('categoryImage', '');
+    } else {
+      formData.append('categoryImage', this.file);
+    }
     formData.append('categoryName', this.addCategoryForm.controls.categoryName.value);
+    debugger
     this.categoryAddEditService.onSaveEdit(formData).subscribe(res => {
       if (res) {
         this.toastr.success("Cập nhật danh mục thành công!");
