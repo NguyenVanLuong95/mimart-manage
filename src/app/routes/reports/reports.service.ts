@@ -8,12 +8,12 @@ import { Observable } from 'rxjs';
 })
 export class ReportsService {
   constructor(private http: HttpClient) { }
- 
+
   getListStories(): Observable<any> {
     return this.http.get<any>(`${baseUrl.baseUrl}/api/store-list`);
   }
 
-  getReport(id): Observable<any> {
+  getReport(id, startDate, endDate): Observable<any> {
     return this.http.get<any>(`${baseUrl.baseUrl}/api/monthly-report/${id}`);
   }
 }

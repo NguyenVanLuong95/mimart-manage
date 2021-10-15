@@ -8,7 +8,6 @@ import { ReportsService } from './reports.service';
 export class ReportsComponent implements OnInit {
   listStories: any;
   listReport: any;
-  storyId = {};
   storyName!: string;
   reportForm = new FormGroup({});
   displayedColumns = ['productName', 'unitPrice', 'inventoryQuantity', 'discount', 'soldQuantity', 'revenue'];
@@ -19,13 +18,14 @@ export class ReportsComponent implements OnInit {
   ngOnInit(): void {
     this.reportForm = this.fb.group({
       story: ['', Validators.required],
+      dateFrom: ['', Validators.required],
+      dateTo: ['', Validators.required],
     });
     this.getListStories();
     this.reportForm.controls['story'].setValue(1);
     if (this.listStories) {
       this.storyName = this.listStories.find(x => x.id == 1).name;
     }
-    this.getReport(this.reportForm.controls['story'].value)
   }
 
   getListStories() {
@@ -33,16 +33,12 @@ export class ReportsComponent implements OnInit {
       this.listStories = res
     })
   }
-  getReport(storyId) {
-    this.reportService.getReport(storyId).subscribe(res => {
+  getReport() {
+    let storyId = this.reportForm.controls['story'].value;
+    let dateFrom = this.reportForm.controls['dateFrom'].value;
+    let dateTo = this.reportForm.controls['dateTo'].value;
+    this.reportService.getReport(storyId, dateFrom, dateTo).subscribe(res => {
       this.listReport = res.content;
     })
-  }
-  onValueChange(event) {
-    if (event.value) {
-      this.storyId = event.value
-      this.storyName = this.listStories.find(x => x.id == this.storyId).name;
-      this.getReport(this.storyId);
-    }
   }
 }
