@@ -25,6 +25,7 @@ export class ShippedComponent implements OnInit {
     { header: 'Mã đơn hàng', field: 'orderCode' },
     { header: 'Ngày tạo', field: 'createdDate' },
     { header: 'Tổng giá', field: 'totalAmount', type: 'number' },
+    { header: 'Ghi chú', field: 'note' },
   ];
   constructor(private fb: FormBuilder, private serviceOrders: OrdersService, private cdr: ChangeDetectorRef, public dialog: MtxDialog) { }
   ngOnInit(): void {
