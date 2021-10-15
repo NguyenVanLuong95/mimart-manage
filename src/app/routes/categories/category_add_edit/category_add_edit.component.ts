@@ -7,6 +7,7 @@ import { CategoryAddEditService } from './category_add_edit.service';
 @Component({
   selector: 'app-categories-category_add_edit',
   templateUrl: './category_add_edit.component.html',
+  styleUrls: ['./category_add_edit.component.scss'],
 })
 export class CategoryAddEditComponent implements OnInit {
   addCategoryForm = new FormGroup({});
@@ -51,9 +52,7 @@ export class CategoryAddEditComponent implements OnInit {
       this.showImage = false;
     }
   }
-  onClickFileInputButton(): void {
-    this.fileInput.nativeElement.click();
-  }
+
   onSave() {
     const formData = new FormData();
     formData.append('categoryImage', this.file);

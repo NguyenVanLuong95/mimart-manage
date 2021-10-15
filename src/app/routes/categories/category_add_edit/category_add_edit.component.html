@@ -6,31 +6,23 @@
       <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
         <mat-form-field class="m-r-8">
           <input
-            matInput
-            placeholder="Tên danh mục"
-            formControlName="categoryName"
-            name="categoryName"
-          />
+                 matInput
+                 placeholder="Tên danh mục"
+                 formControlName="categoryName"
+                 name="categoryName" />
         </mat-form-field>
       </div>
     </div>
     <div fxLayout="row wrap" class="matero-row">
       <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
         <input
-          type="file"
-          #fileInput
-          accept="image/*"
-          formControlName="categoryImage"
-          (change)="onChangeFileInput()"
-        />
-        <button
-          mat-raised-button
-          color="primary"
-          class="file-select-button"
-          (click)="onClickFileInputButton()"
-        >
-          <!-- <mat-icon>attach_file</mat-icon> -->
-        </button>
+               type="file"
+               #fileInput
+               accept="image/*"
+               formControlName="categoryImage"
+               (change)="onChangeFileInput()"
+               class="custom-file-upload" />
+        <span style="color: red; font-size:small;">Chọn ảnh danh mục</span>
       </div>
     </div>
 
@@ -38,11 +30,10 @@
       <div fxFlex="66.67" fxFlex.lt-sm="100" class="matero-col"></div>
       <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
         <button
-          mat-raised-button
-          color="primary"
-          (click)="onSave()"
-          [disabled]="addCategoryForm.invalid"
-        >
+                mat-raised-button
+                color="primary"
+                (click)="onSave()"
+                [disabled]="addCategoryForm.invalid">
           Lưu
         </button>
         <button mat-raised-button color="primary" (click)="onClose()" style="margin-left: 1%">
@@ -61,32 +52,24 @@
       <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
         <mat-form-field class="m-r-8">
           <input
-            matInput
-            placeholder="Tên danh mục"
-            formControlName="categoryName"
-            name="categoryName"
-          />
+                 matInput
+                 placeholder="Tên danh mục"
+                 formControlName="categoryName"
+                 name="categoryName" />
         </mat-form-field>
       </div>
     </div>
     <div fxLayout="row wrap" class="matero-row">
       <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
-        <img [src]="imagePath" width="200" height="200" *ngIf="showImage" />
+        <img [src]="imagePath" width="150" height="150" *ngIf="showImage"
+             style="margin-bottom: 5%;" />
         <input
-          type="file"
-          #fileInput
-          accept="image/*"
-          formControlName="categoryImage"
-          (change)="onChangeFileInput()"
-        />
-        <button
-          mat-raised-button
-          color="primary"
-          class="file-select-button"
-          (click)="onClickFileInputButton()"
-        >
-          <!-- <mat-icon>attach_file</mat-icon> -->
-        </button>
+               type="file"
+               #fileInput
+               accept="image/*"
+               formControlName="categoryImage"
+               (change)="onChangeFileInput()" class="custom-file-upload" />
+        <span style="color: red; font-size:small;">Chọn ảnh danh mục</span>
       </div>
     </div>
 
@@ -94,11 +77,10 @@
       <div fxFlex="66.67" fxFlex.lt-sm="100" class="matero-col"></div>
       <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
         <button
-          mat-raised-button
-          color="primary"
-          (click)="onSaveEdit()"
-          [disabled]="addCategoryForm.invalid"
-        >
+                mat-raised-button
+                color="primary"
+                (click)="onSaveEdit()"
+                [disabled]="addCategoryForm.invalid">
           Lưu
         </button>
         <button mat-raised-button color="primary" (click)="onClose()" style="margin-left: 1%">

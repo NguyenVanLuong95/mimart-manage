@@ -9,6 +9,7 @@ import { ProductAddEditService } from './product_add_edit.service';
 @Component({
   selector: 'app-products-product_add_edit',
   templateUrl: './product_add_edit.component.html',
+  styleUrls: ['./product_add_edit.component.scss'],
 })
 export class ProductAddEditComponent implements OnInit {
   addProductForm = new FormGroup({});
@@ -38,6 +39,7 @@ export class ProductAddEditComponent implements OnInit {
       category: ['', Validators.required],
       building: ['', Validators.required],
       story: ['', Validators.required],
+      discount: ['']
     });
     this.getListCategories();
     this.getAllBuildings();
@@ -50,6 +52,7 @@ export class ProductAddEditComponent implements OnInit {
       this.addProductForm.controls['category'].setValue(this.data.record.categoryId);
       this.addProductForm.controls['building'].setValue(this.data.record.buildingId);
       this.addProductForm.controls['story'].setValue(this.data.record.storeId);
+      this.addProductForm.controls['discount'].setValue(this.data.record.discount);
     } else {
       this.checkForm = false;
       this.addProductForm.controls['category'].setValue(1);
@@ -77,9 +80,6 @@ export class ProductAddEditComponent implements OnInit {
   onChangeFileInput(): void {
     const files: { [key: string]: File } = this.fileInput.nativeElement.files;
     this.file = files[0];
-  }
-  onClickFileInputButton(): void {
-    this.fileInput.nativeElement.click();
   }
   onSave() {
     const formData = new FormData();
@@ -122,5 +122,4 @@ export class ProductAddEditComponent implements OnInit {
       this.listBuildings = res;
     })
   }
-
 }
