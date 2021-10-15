@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { CategoriesService } from '../categories.service';
 import { CategoryAddEditService } from './category_add_edit.service';
 
 @Component({
@@ -22,7 +23,8 @@ export class CategoryAddEditComponent implements OnInit {
     private categoryAddEditService: CategoryAddEditService,
     public dialogRef: MatDialogRef<CategoryAddEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private categoryService: CategoriesService,
   ) { }
 
   ngOnInit() {
@@ -62,6 +64,7 @@ export class CategoryAddEditComponent implements OnInit {
       if (res) {
         this.toastr.success("Thêm mới danh mục thành công!");
         this.onClose();
+        this.categoryService.getListCategories();
       } else {
         this.toastr.error("Thêm mới danh mục thất bại!")
       }
@@ -71,17 +74,15 @@ export class CategoryAddEditComponent implements OnInit {
   onSaveEdit() {
     const formData = new FormData();
     formData.append('categoryId', this.id);
-    if (this.file == undefined) {
-      formData.append('categoryImage', '');
-    } else {
+    if (this.file) {
       formData.append('categoryImage', this.file);
     }
     formData.append('categoryName', this.addCategoryForm.controls.categoryName.value);
-    debugger
     this.categoryAddEditService.onSaveEdit(formData).subscribe(res => {
       if (res) {
         this.toastr.success("Cập nhật danh mục thành công!");
         this.onClose();
+        this.categoryService.getListCategories();
       } else {
         this.toastr.error("Cập nhật danh mục thất bại!")
       }
