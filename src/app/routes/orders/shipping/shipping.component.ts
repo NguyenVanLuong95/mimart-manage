@@ -26,6 +26,7 @@ export class ShippingComponent implements OnInit {
     { header: 'Mã đơn hàng', field: 'orderCode' },
     { header: 'Ngày tạo', field: 'createdDate' },
     { header: 'Tổng giá', field: 'totalAmount', type: 'number' },
+    { header: 'Ghi chú', field: 'note' },
     {
       header: 'Hành động',
       field: 'operation',
