@@ -2,7 +2,6 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { CategoriesService } from '../categories.service';
 import { CategoryAddEditService } from './category_add_edit.service';
 
 @Component({
@@ -24,7 +23,6 @@ export class CategoryAddEditComponent implements OnInit {
     public dialogRef: MatDialogRef<CategoryAddEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private toastr: ToastrService,
-    private categoryService: CategoriesService,
   ) { }
 
   ngOnInit() {
