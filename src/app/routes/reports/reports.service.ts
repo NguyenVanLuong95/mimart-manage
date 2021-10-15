@@ -13,7 +13,7 @@ export class ReportsService {
     return this.http.get<any>(`${baseUrl.baseUrl}/api/store-list`);
   }
 
-  getReport(id, startDate, endDate): Observable<any> {
-    return this.http.get<any>(`${baseUrl.baseUrl}/api/monthly-report/${id}`);
+  getReport(storyId, params = {}): Observable<any> {
+    return this.http.get<any>(`${baseUrl.baseUrl}/api/monthly-report/${storyId}`, { params });
   }
 }
