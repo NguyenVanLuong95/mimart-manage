@@ -64,7 +64,6 @@ export class CategoryAddEditComponent implements OnInit {
       if (res) {
         this.toastr.success("Thêm mới danh mục thành công!");
         this.onClose();
-        this.categoryService.getListCategories();
       } else {
         this.toastr.error("Thêm mới danh mục thất bại!")
       }
@@ -82,7 +81,6 @@ export class CategoryAddEditComponent implements OnInit {
       if (res) {
         this.toastr.success("Cập nhật danh mục thành công!");
         this.onClose();
-        this.categoryService.getListCategories();
       } else {
         this.toastr.error("Cập nhật danh mục thất bại!")
       }
