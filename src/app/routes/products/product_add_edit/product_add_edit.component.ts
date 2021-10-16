@@ -4,7 +4,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CategoriesService } from 'app/routes/categories/categories.service';
 import { ReportsService } from 'app/routes/reports/reports.service';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
 import { ProductAddEditService } from './product_add_edit.service';
 
 @Component({
@@ -24,6 +23,8 @@ export class ProductAddEditComponent implements OnInit {
   selectedFiles!: FileList;
   formData = new FormData();
   productImageBase64: any;
+  arrImageSrc: string[] = [];
+  showImage = true;
 
   constructor(
     private fb: FormBuilder,
@@ -39,7 +40,7 @@ export class ProductAddEditComponent implements OnInit {
     this.addProductForm = this.fb.group({
       productName: ['', Validators.required],
       unitPrice: ['', Validators.required],
-      productImage: [''],
+      productImage: ['File | null'],
       category: ['', Validators.required],
       building: ['', Validators.required],
       story: ['', Validators.required],
@@ -126,8 +127,19 @@ export class ProductAddEditComponent implements OnInit {
 
   onChangeFileInput(event) {
     this.selectedFiles = event.target.files;
+    if (this.selectedFiles) {
+      this.showImage = false;
+    }
     for (let i = 0; i < this.selectedFiles.length; i++) {
       this.formData.append('productImage', this.selectedFiles[i]);
+      const reader = new FileReader();
+      reader.onload = (event: any) => {
+        console.log(event.target.result)
+        if (event.target.result) {
+          this.arrImageSrc.push(event.target.result);
+        }
+      }
+      reader.readAsDataURL(this.selectedFiles[i]);
     }
   }
 }

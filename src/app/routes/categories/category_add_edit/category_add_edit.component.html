@@ -65,14 +65,14 @@
       <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
         <img [src]="imagePath" width="150" height="150" *ngIf="showImage"
              style="margin-bottom: 5%;" />
+        <img id="blah" [src]="imageSrc" width="150" height="150" *ngIf="!showImage"
+             style="margin-bottom: 5%;" />
         <input
                type="file"
                #fileInput
                accept="image/*"
                formControlName="categoryImage"
                (change)="onChangeFileInput()" class="custom-file-upload" />
-        <img id="blah" [src]="imageSrc" width="150" height="150" *ngIf="!showImage"
-             style="position: relative; top: 10px;" />
         <span style="color: red; font-size:small; position: relative; top: 10px;"
               *ngIf="showImage">Cập nhật ảnh danh
           mục</span>
