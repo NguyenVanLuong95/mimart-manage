@@ -18,6 +18,7 @@ export class CategoryAddEditComponent implements OnInit {
   id: any;
   imagePath: any;
   showImage = true;
+  imageSrc: any;
   constructor(
     private fb: FormBuilder,
     private categoryAddEditService: CategoryAddEditService,
@@ -48,6 +49,9 @@ export class CategoryAddEditComponent implements OnInit {
   onChangeFileInput(): void {
     const files: { [key: string]: File } = this.fileInput.nativeElement.files;
     this.file = files[0];
+    const reader = new FileReader();
+    reader.onload = e => this.imageSrc = reader.result;
+    reader.readAsDataURL(this.file);
     if (this.file) {
       this.showImage = false;
     }

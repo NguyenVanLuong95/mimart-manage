@@ -67,10 +67,10 @@
                type="file"
                #fileInput
                accept="image/*"
-               formControlName="productImage"
-               (change)="onChangeFileInput()" class="custom-file-upload" />
-        <span style="color: red; font-size:small; position: relative; top: 10px;">Chọn ảnh danh
-          mục</span>
+               formControlName="productImage" multiple
+               (change)="onChangeFileInput($event)" class="custom-file-upload" />
+        <span style="color: red; font-size:small; position: relative; top: 10px;">Chọn ảnh sản
+          phẩm</span>
       </div>
     </div>
 
@@ -150,12 +150,14 @@
     </div>
     <div fxLayout="row wrap" class="matero-row">
       <div fxFlex="50" fxFlex.lt-sm="100" class="matero-col">
+        <img *ngFor="let item of productImageBase64" [src]="item" width="150" height="150"
+             style="margin-bottom: 5%;" />
         <input
                type="file"
                #fileInput
                accept="image/*"
                formControlName="productImage"
-               (change)="onChangeFileInput()" class="custom-file-upload" />
+               (change)="onChangeFileInput($event)" class="custom-file-upload" />
         <span style="color: red; font-size:small; position: relative; top: 10px;">Chọn ảnh danh
           mục</span>
       </div>
