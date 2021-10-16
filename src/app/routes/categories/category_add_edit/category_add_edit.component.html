@@ -22,7 +22,10 @@
                formControlName="categoryImage"
                (change)="onChangeFileInput()"
                class="custom-file-upload" />
-        <span style="color: red; font-size:small; position: relative; top: 10px;">Chọn ảnh danh
+        <img id="blah" [src]="imageSrc" width="150" height="150" *ngIf="!showImage"
+             style="position: relative; top: 10px;" />
+        <span style="color: red; font-size:small; position: relative; top: 10px;"
+              *ngIf="showImage">Chọn ảnh danh
           mục</span>
       </div>
     </div>
@@ -68,7 +71,10 @@
                accept="image/*"
                formControlName="categoryImage"
                (change)="onChangeFileInput()" class="custom-file-upload" />
-        <span style="color: red; font-size:small; position: relative; top: 10px;">Chọn ảnh danh
+        <img id="blah" [src]="imageSrc" width="150" height="150" *ngIf="!showImage"
+             style="position: relative; top: 10px;" />
+        <span style="color: red; font-size:small; position: relative; top: 10px;"
+              *ngIf="showImage">Cập nhật ảnh danh
           mục</span>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CategoriesService } from 'app/routes/categories/categories.service';
 import { ReportsService } from 'app/routes/reports/reports.service';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import { ProductAddEditService } from './product_add_edit.service';
 
 @Component({
@@ -16,11 +17,14 @@ export class ProductAddEditComponent implements OnInit {
   @ViewChild('fileInput')
   fileInput;
   checkForm: boolean = false;
-  file!: File;
   listCategory: any;
   listBuildings: any;
   id: any;
   listStories: any;
+  selectedFiles!: FileList;
+  formData = new FormData();
+  productImageBase64: any;
+
   constructor(
     private fb: FormBuilder,
     private productAddEditService: ProductAddEditService,
@@ -53,6 +57,11 @@ export class ProductAddEditComponent implements OnInit {
       this.addProductForm.controls['building'].setValue(this.data.record.buildingId);
       this.addProductForm.controls['story'].setValue(this.data.record.storeId);
       this.addProductForm.controls['discount'].setValue(this.data.record.discount);
+      this.productImageBase64 = this.data.record.productImageBase64;
+      this.productImageBase64 = this.productImageBase64.map(x => {
+        x = `data:image/png;base64,${x.substring(1)}`;
+        return x;
+      });
     } else {
       this.checkForm = false;
       this.addProductForm.controls['category'].setValue(1);
@@ -77,19 +86,13 @@ export class ProductAddEditComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  onChangeFileInput(): void {
-    const files: { [key: string]: File } = this.fileInput.nativeElement.files;
-    this.file = files[0];
-  }
   onSave() {
-    const formData = new FormData();
-    formData.append('categoryId', this.addProductForm.controls['category'].value)
-    formData.append('productImage', this.file);
-    formData.append('productName', this.addProductForm.controls.productName.value);
-    formData.append('unitPrice', this.addProductForm.controls.unitPrice.value);
-    formData.append('buildingId', this.addProductForm.controls.building.value);
-    formData.append('storeId', this.addProductForm.controls.story.value);
-    this.productAddEditService.onSave(formData).subscribe(res => {
+    this.formData.append('categoryId', this.addProductForm.controls['category'].value)
+    this.formData.append('productName', this.addProductForm.controls.productName.value);
+    this.formData.append('unitPrice', this.addProductForm.controls.unitPrice.value);
+    this.formData.append('buildingId', this.addProductForm.controls.building.value);
+    this.formData.append('storeId', this.addProductForm.controls.story.value);
+    this.productAddEditService.onSave(this.formData).subscribe(res => {
       if (res) {
         this.toastr.success("Thêm mới sản phẩm thành công!");
         this.onClose();
@@ -100,26 +103,31 @@ export class ProductAddEditComponent implements OnInit {
   }
 
   onSaveEdit() {
-    const formData = new FormData();
-    formData.append('categoryId', this.addProductForm.controls['category'].value)
-    formData.append('productImage', this.file);
-    formData.append('productName', this.addProductForm.controls.productName.value);
-    formData.append('unitPrice', this.addProductForm.controls.unitPrice.value);
-    formData.append('buildingId', this.addProductForm.controls.building.value);
-    formData.append('storeId', this.addProductForm.controls.story.value);
-    // this.productAddEditService.onSaveEdit(formData).subscribe(res => {
-    //   if (res) {
-    //     this.toastr.success("Cập nhật sản phẩm thành công!");
-    //     this.onClose();
-    //   } else {
-    //     this.toastr.error("Cập nhật sản phẩm thất bại!")
-    //   }
-    // });
+    this.formData.append('categoryId', this.addProductForm.controls['category'].value)
+    this.formData.append('productName', this.addProductForm.controls.productName.value);
+    this.formData.append('unitPrice', this.addProductForm.controls.unitPrice.value);
+    this.formData.append('buildingId', this.addProductForm.controls.building.value);
+    this.formData.append('storeId', this.addProductForm.controls.story.value);
+    this.productAddEditService.onSaveEdit(this.formData).subscribe(res => {
+      if (res) {
+        this.toastr.success("Cập nhật sản phẩm thành công!");
+        this.onClose();
+      } else {
+        this.toastr.error("Cập nhật sản phẩm thất bại!")
+      }
+    });
   }
 
   getAllBuildings() {
     this.productAddEditService.getAllBuilding().subscribe(res => {
       this.listBuildings = res;
     })
+  }
+
+  onChangeFileInput(event) {
+    this.selectedFiles = event.target.files;
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      this.formData.append('productImage', this.selectedFiles[i]);
+    }
   }
 }
