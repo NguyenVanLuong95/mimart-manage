@@ -60,7 +60,7 @@ export class ProductAddEditComponent implements OnInit {
       this.addProductForm.controls['discount'].setValue(this.data.record.discount);
       this.productImageBase64 = this.data.record.productImageBase64;
       this.productImageBase64 = this.productImageBase64.map(x => {
-        x = `data:image/png;base64,${x.substring(1)}`;
+        x = `data:image/png;base64,${x}`;
         return x;
       });
     } else {
@@ -93,6 +93,9 @@ export class ProductAddEditComponent implements OnInit {
     this.formData.append('unitPrice', this.addProductForm.controls.unitPrice.value);
     this.formData.append('buildingId', this.addProductForm.controls.building.value);
     this.formData.append('storeId', this.addProductForm.controls.story.value);
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      this.formData.append('productImage', this.selectedFiles[i]);
+    }
     this.productAddEditService.onSave(this.formData).subscribe(res => {
       if (res) {
         this.toastr.success("Thêm mới sản phẩm thành công!");
@@ -109,6 +112,10 @@ export class ProductAddEditComponent implements OnInit {
     this.formData.append('unitPrice', this.addProductForm.controls.unitPrice.value);
     this.formData.append('buildingId', this.addProductForm.controls.building.value);
     this.formData.append('storeId', this.addProductForm.controls.story.value);
+    this.formData.append('productId', this.id);
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      this.formData.append('productImage', this.selectedFiles[i]);
+    }
     this.productAddEditService.onSaveEdit(this.formData).subscribe(res => {
       if (res) {
         this.toastr.success("Cập nhật sản phẩm thành công!");
@@ -131,10 +138,8 @@ export class ProductAddEditComponent implements OnInit {
       this.showImage = false;
     }
     for (let i = 0; i < this.selectedFiles.length; i++) {
-      this.formData.append('productImage', this.selectedFiles[i]);
       const reader = new FileReader();
       reader.onload = (event: any) => {
-        console.log(event.target.result)
         if (event.target.result) {
           this.arrImageSrc.push(event.target.result);
         }
