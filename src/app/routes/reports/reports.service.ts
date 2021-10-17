@@ -16,4 +16,8 @@ export class ReportsService {
   getReport(storyId, params = {}): Observable<any> {
     return this.http.get<any>(`${baseUrl.baseUrl}/api/monthly-report/${storyId}`, { params });
   }
+
+  exportExcel(id): Observable<any> {
+    return this.http.get<any>(`${baseUrl.baseUrl}/api/monthly-export/${id}`)
+  }
 }

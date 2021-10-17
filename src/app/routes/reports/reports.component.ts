@@ -68,4 +68,9 @@ export class ReportsComponent implements OnInit {
       this.listReport = res.content;
     })
   }
+  exportExcel() {
+    let storyId = this.reportForm.controls['story'].value;
+    this.reportService.exportExcel(storyId).subscribe(res => {
+    })
+  }
 }
