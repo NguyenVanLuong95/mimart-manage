@@ -40,7 +40,7 @@ export class ProductAddEditComponent implements OnInit {
     this.addProductForm = this.fb.group({
       productName: ['', Validators.required],
       unitPrice: ['', Validators.required],
-      productImage: ['File | null'],
+      productImage: [''],
       category: ['', Validators.required],
       building: ['', Validators.required],
       story: ['', Validators.required],
@@ -93,8 +93,10 @@ export class ProductAddEditComponent implements OnInit {
     this.formData.append('unitPrice', this.addProductForm.controls.unitPrice.value);
     this.formData.append('buildingId', this.addProductForm.controls.building.value);
     this.formData.append('storeId', this.addProductForm.controls.story.value);
-    for (let i = 0; i < this.selectedFiles.length; i++) {
-      this.formData.append('productImage', this.selectedFiles[i]);
+    if (this.selectedFiles) {
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        this.formData.append('productImage', this.selectedFiles[i]);
+      }
     }
     this.productAddEditService.onSave(this.formData).subscribe(res => {
       if (res) {
@@ -113,8 +115,10 @@ export class ProductAddEditComponent implements OnInit {
     this.formData.append('buildingId', this.addProductForm.controls.building.value);
     this.formData.append('storeId', this.addProductForm.controls.story.value);
     this.formData.append('productId', this.id);
-    for (let i = 0; i < this.selectedFiles.length; i++) {
-      this.formData.append('productImage', this.selectedFiles[i]);
+    if (this.selectedFiles) {
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        this.formData.append('productImage', this.selectedFiles[i]);
+      }
     }
     this.productAddEditService.onSaveEdit(this.formData).subscribe(res => {
       if (res) {
