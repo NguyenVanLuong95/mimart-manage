@@ -16,4 +16,8 @@ export class ReportsService {
   getReport(id, startDate, endDate): Observable<any> {
     return this.http.get<any>(`${baseUrl.baseUrl}/api/monthly-report/${id}`);
   }
+
+  exportExcel(id): Observable<any> {
+    return this.http.get<any>(`${baseUrl.baseUrl}/api/monthly-export/${id}`)
+  }
 }
