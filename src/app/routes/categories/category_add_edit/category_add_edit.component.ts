@@ -30,7 +30,7 @@ export class CategoryAddEditComponent implements OnInit {
   ngOnInit() {
     this.addCategoryForm = this.fb.group({
       categoryName: ['', Validators.required],
-      categoryImage: ['File | null']
+      categoryImage: ['']
     });
     if (this.data) {
       this.checkForm = true;
