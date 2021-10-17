@@ -108,6 +108,7 @@ export class ProductsComponent implements OnInit {
       width: '700px',
       data: { record: value },
     });
+    dialogRef.afterClosed().subscribe(() => { this.getListProducts(); });
   }
   delete(value: any) {
     if (value.productId) {
@@ -124,5 +125,6 @@ export class ProductsComponent implements OnInit {
     const dialogRef = this.dialog.originalOpen(ProductAddEditComponent, {
       width: '700px',
     });
+    dialogRef.afterClosed().subscribe(() => { this.getListProducts(); });
   }
 }

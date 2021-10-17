@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
@@ -95,5 +95,6 @@ export class ShippingComponent implements OnInit {
       width: '600px',
       data: { record: value.productList, orderId: value.billId },
     });
+    dialogRef.afterClosed().subscribe(() => { this.getListShippingOrders(); });
   }
 }
