@@ -108,6 +108,7 @@ export class NewOrdersComponent implements OnInit {
       width: '600px',
       data: { record: value.productList, orderId: value.billId },
     });
+    dialogRef.afterClosed().subscribe(() => { this.getListNewOrders(); });
   }
   viewBill(value: any) {
     if (value.billId) {

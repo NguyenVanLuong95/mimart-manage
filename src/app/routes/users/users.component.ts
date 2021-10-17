@@ -96,5 +96,6 @@ export class UsersComponent implements OnInit {
       width: '600px',
       data: { record: value },
     });
+    dialogRef.afterClosed().subscribe(() => { this.getListUser(); });
   }
 }

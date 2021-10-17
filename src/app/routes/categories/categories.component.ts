@@ -101,6 +101,7 @@ export class CategoriesComponent implements OnInit {
       width: '600px',
       data: { record: value },
     });
+    dialogRef.afterClosed().subscribe(() => { this.getListCategories(); });
   }
   delete(value: any) {
     if (value.id) {
@@ -122,5 +123,6 @@ export class CategoriesComponent implements OnInit {
     const dialogRef = this.dialog.originalOpen(CategoryAddEditComponent, {
       width: '600px',
     });
+    dialogRef.afterClosed().subscribe(() => { this.getListCategories(); });
   }
 }

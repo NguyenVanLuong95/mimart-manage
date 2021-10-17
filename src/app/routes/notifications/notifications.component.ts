@@ -109,6 +109,7 @@ export class NotificationsComponent implements OnInit {
     const dialogRef = this.dialog.originalOpen(NotificationAddEditComponent, {
       width: '600px',
     });
+    dialogRef.afterClosed().subscribe(() => { this.getListNotifications(); });
   }
 
   edit(value: any) {
@@ -116,6 +117,7 @@ export class NotificationsComponent implements OnInit {
       width: '600px',
       data: { record: value },
     });
+    dialogRef.afterClosed().subscribe(() => { this.getListNotifications(); });
   }
   delete(value: any) {
     if (value.id) {
