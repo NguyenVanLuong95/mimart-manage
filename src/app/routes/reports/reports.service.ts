@@ -17,7 +17,7 @@ export class ReportsService {
     return this.http.get<any>(`${baseUrl.baseUrl}/api/monthly-report/${storyId}`, { params });
   }
 
-  exportExcel(id): Observable<any> {
-    return this.http.get<any>(`${baseUrl.baseUrl}/api/monthly-export/${id}`)
+  exportExcel(storyId, params = {}): any {
+    return this.http.get(`${baseUrl.baseUrl}/api/monthly-export/${storyId}`, { params, responseType: 'blob' })
   }
 }
