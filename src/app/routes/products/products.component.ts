@@ -1,7 +1,6 @@
-import { ChangeDetectorRef, Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute } from '@angular/router';
 import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
 import { ProductsService } from './products.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,7 +25,6 @@ export class ProductsComponent implements OnInit {
   columns: MtxGridColumn[] = [
     { header: 'Tên sản phẩm', field: 'productName' },
     { header: 'Giá sản phẩm', field: 'unitPrice' },
-    // { header: 'Hình ảnh', field: 'productImageUrl', type: 'image' },
     { header: 'Danh mục', field: 'categoryName' },
     { header: 'Tòa nhà', field: 'buildingName' },
     { header: 'Cửa hàng', field: 'storeName' },
@@ -80,10 +78,6 @@ export class ProductsComponent implements OnInit {
     }
     this.isLoading = true;
     this.serviceProducts.getListProducts(params).subscribe(res => {
-      // this.list = res.content.map(x => {
-      //   x.productImageUrl = `data:image/png;base64,${x.productImageBase64}`;
-      //   return x;
-      // });
       this.list = res.content;
       this.total = res.totalElements;
       this.isLoading = false;
