@@ -19,6 +19,7 @@ export class CategoryAddEditComponent implements OnInit {
   imagePath: any;
   showImage = true;
   imageSrc: any;
+  isActive = ['Đang hoạt động', 'Không hoạt động'];
   constructor(
     private fb: FormBuilder,
     private categoryAddEditService: CategoryAddEditService,
@@ -30,15 +31,18 @@ export class CategoryAddEditComponent implements OnInit {
   ngOnInit() {
     this.addCategoryForm = this.fb.group({
       categoryName: ['', Validators.required],
-      categoryImage: ['']
+      categoryImage: [''],
+      isActive: ['', Validators.required],
     });
     if (this.data) {
       this.checkForm = true;
       this.id = this.data.record.id;
       this.addCategoryForm.controls['categoryName'].setValue(this.data.record.categoryName);
       this.imagePath = this.data.record.categoryImageUrl;
+      this.addCategoryForm.controls['isActive'].setValue(this.data.record.isActive);
     } else {
       this.checkForm = false;
+      this.addCategoryForm.controls['isActive'].setValue(this.isActive[0]);
     }
   }
 
@@ -59,8 +63,11 @@ export class CategoryAddEditComponent implements OnInit {
 
   onSave() {
     const formData = new FormData();
+    let isActive;
+    (this.addCategoryForm.controls['isActive'].value == 'Đang hoạt động') ? (isActive = 1) : (isActive = 0);
     formData.append('categoryImage', this.file);
     formData.append('categoryName', this.addCategoryForm.controls.categoryName.value);
+    formData.append('isActive', isActive);
     this.categoryAddEditService.onSave(formData).subscribe(res => {
       if (res) {
         this.toastr.success("Thêm mới danh mục thành công!");
@@ -73,11 +80,14 @@ export class CategoryAddEditComponent implements OnInit {
 
   onSaveEdit() {
     const formData = new FormData();
+    let isActive;
+    (this.addCategoryForm.controls['isActive'].value == 'Đang hoạt động') ? (isActive = 1) : (isActive = 0);
     formData.append('categoryId', this.id);
     if (this.file) {
       formData.append('categoryImage', this.file);
     }
     formData.append('categoryName', this.addCategoryForm.controls.categoryName.value);
+    formData.append('isActive', isActive);
     this.categoryAddEditService.onSaveEdit(formData).subscribe(res => {
       if (res) {
         this.toastr.success("Cập nhật danh mục thành công!");

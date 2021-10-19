@@ -25,6 +25,7 @@ export class ProductAddEditComponent implements OnInit {
   productImageBase64: any;
   arrImageSrc: string[] = [];
   showImage = true;
+  isActive = ['Đang hoạt động', 'Không hoạt động'];
 
   constructor(
     private fb: FormBuilder,
@@ -44,7 +45,8 @@ export class ProductAddEditComponent implements OnInit {
       category: ['', Validators.required],
       building: ['', Validators.required],
       story: ['', Validators.required],
-      discount: ['']
+      discount: [''],
+      isActive: ['', Validators.required],
     });
     this.getListCategories();
     this.getAllBuildings();
@@ -63,11 +65,13 @@ export class ProductAddEditComponent implements OnInit {
         x = `data:image/png;base64,${x}`;
         return x;
       });
+      this.addProductForm.controls['isActive'].setValue(this.data.record.isActive);
     } else {
       this.checkForm = false;
       this.addProductForm.controls['category'].setValue(1);
       this.addProductForm.controls['building'].setValue(1);
       this.addProductForm.controls['story'].setValue(1);
+      this.addProductForm.controls['isActive'].setValue(this.isActive[0])
     }
   }
 
@@ -98,6 +102,9 @@ export class ProductAddEditComponent implements OnInit {
         this.formData.append('productImage', this.selectedFiles[i]);
       }
     }
+    let isActive;
+    (this.addProductForm.controls['isActive'].value == 'Đang hoạt động') ? (isActive = 1) : (isActive = 0);
+    this.formData.append('isActive', isActive);
     this.productAddEditService.onSave(this.formData).subscribe(res => {
       if (res) {
         this.toastr.success("Thêm mới sản phẩm thành công!");
@@ -120,6 +127,9 @@ export class ProductAddEditComponent implements OnInit {
         this.formData.append('productImage', this.selectedFiles[i]);
       }
     }
+    let isActive;
+    (this.addProductForm.controls['isActive'].value == 'Đang hoạt động') ? (isActive = 1) : (isActive = 0);
+    this.formData.append('isActive', isActive);
     this.productAddEditService.onSaveEdit(this.formData).subscribe(res => {
       if (res) {
         this.toastr.success("Cập nhật sản phẩm thành công!");

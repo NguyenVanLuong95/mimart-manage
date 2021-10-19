@@ -28,6 +28,7 @@ export class ProductsComponent implements OnInit {
     { header: 'Danh mục', field: 'categoryName' },
     { header: 'Tòa nhà', field: 'buildingName' },
     { header: 'Cửa hàng', field: 'storeName' },
+    { header: 'Trạng thái', field: 'isActive' },
     {
       header: 'Hành động',
       field: 'operation',
@@ -78,7 +79,10 @@ export class ProductsComponent implements OnInit {
     }
     this.isLoading = true;
     this.serviceProducts.getListProducts(params).subscribe(res => {
-      this.list = res.content;
+      this.list = res.content.map(x => {
+        x.isActive = x.isActive == true ? "Đang hoạt động" : "Không hoạt động";
+        return x;
+      });
       this.total = res.totalElements;
       this.isLoading = false;
     });
