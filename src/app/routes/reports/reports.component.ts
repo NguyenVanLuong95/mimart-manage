@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReportsService } from './reports.service';
 import { Moment } from 'moment';
 import { ToastrService } from 'ngx-toastr';
+import { CategoriesService } from '../categories/categories.service';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -11,6 +12,7 @@ export class ReportsComponent implements OnInit {
   listStories: any;
   listReport: any;
   storyName!: string;
+  listCategory: any;
   reportForm = new FormGroup({});
   pdfSrc = {}
   FileSaver = require('file-saver');
@@ -19,15 +21,18 @@ export class ReportsComponent implements OnInit {
   constructor(
     private reportService: ReportsService,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private categoryService: CategoriesService,
   ) { }
   ngOnInit(): void {
     this.reportForm = this.fb.group({
       story: ['', Validators.required],
       dateFrom: ['', Validators.required],
       dateTo: ['', Validators.required],
+      category: [''],
     });
     this.getListStories();
+    this.getListCategories();
     this.reportForm.controls['story'].setValue(1);
     if (this.listStories) {
       this.storyName = this.listStories.find(x => x.id == 1).name;
@@ -39,7 +44,15 @@ export class ReportsComponent implements OnInit {
       this.listStories = res
     })
   }
+
+  getListCategories() {
+    this.categoryService.getListCategories().subscribe(res => {
+      this.listCategory = res.content;
+    })
+  }
+
   getReport() {
+    let categoryId = this.reportForm.controls['category'].value;
     let storyId = this.reportForm.controls['story'].value;
     let timeDateFrom: Moment = this.reportForm.controls['dateFrom'].value;
     let yearDateFrom = timeDateFrom.toObject().years;
@@ -63,15 +76,26 @@ export class ReportsComponent implements OnInit {
       this.toastr.error("Thời gian từ ngày không được lớn hơn đến ngày!");
       return;
     }
-    let params = {
-      dateFrom: dateFrom,
-      dateTo: dateTo
+    let params = {}
+
+    if (categoryId) {
+      params = {
+        dateFrom: dateFrom,
+        dateTo: dateTo,
+        categoryId: categoryId
+      }
+    } else {
+      params = {
+        dateFrom: dateFrom,
+        dateTo: dateTo
+      }
     }
     this.reportService.getReport(storyId, params).subscribe(res => {
       this.listReport = res.content;
     })
   }
   exportExcel() {
+    let categoryId = this.reportForm.controls['category'].value;
     let storyId = this.reportForm.controls['story'].value;
     let timeDateFrom: Moment = this.reportForm.controls['dateFrom'].value;
     let yearDateFrom = timeDateFrom.toObject().years;
@@ -95,9 +119,19 @@ export class ReportsComponent implements OnInit {
       this.toastr.error("Thời gian từ ngày không được lớn hơn đến ngày!");
       return;
     }
-    let params = {
-      dateFrom: dateFrom,
-      dateTo: dateTo
+    let params = {}
+
+    if (categoryId) {
+      params = {
+        dateFrom: dateFrom,
+        dateTo: dateTo,
+        categoryId: categoryId
+      }
+    } else {
+      params = {
+        dateFrom: dateFrom,
+        dateTo: dateTo
+      }
     }
     this.reportService.exportExcel(storyId, params).subscribe(res => {
       const reader = new FileReader();
