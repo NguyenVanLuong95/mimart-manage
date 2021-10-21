@@ -46,6 +46,8 @@ export class ProductAddEditComponent implements OnInit {
       building: ['', Validators.required],
       story: ['', Validators.required],
       discount: [''],
+      description: [''],
+      quantity: ['', Validators.required],
       isActive: ['', Validators.required],
     });
     this.getListCategories();
@@ -60,6 +62,8 @@ export class ProductAddEditComponent implements OnInit {
       this.addProductForm.controls['building'].setValue(this.data.record.buildingId);
       this.addProductForm.controls['story'].setValue(this.data.record.storeId);
       this.addProductForm.controls['discount'].setValue(this.data.record.discount);
+      this.addProductForm.controls['description'].setValue(this.data.record.description);
+      this.addProductForm.controls['quantity'].setValue(this.data.record.quantity);
       this.productImageBase64 = this.data.record.productImageBase64;
       this.productImageBase64 = this.productImageBase64.map(x => {
         x = `data:image/png;base64,${x}`;
@@ -97,6 +101,9 @@ export class ProductAddEditComponent implements OnInit {
     this.formData.append('unitPrice', this.addProductForm.controls.unitPrice.value);
     this.formData.append('buildingId', this.addProductForm.controls.building.value);
     this.formData.append('storeId', this.addProductForm.controls.story.value);
+    this.formData.append('discount', this.addProductForm.controls.discount.value);
+    this.formData.append('description', this.addProductForm.controls.description.value);
+    this.formData.append('quantity', this.addProductForm.controls.quantity.value);
     if (this.selectedFiles) {
       for (let i = 0; i < this.selectedFiles.length; i++) {
         this.formData.append('productImage', this.selectedFiles[i]);
@@ -122,6 +129,9 @@ export class ProductAddEditComponent implements OnInit {
     this.formData.append('buildingId', this.addProductForm.controls.building.value);
     this.formData.append('storeId', this.addProductForm.controls.story.value);
     this.formData.append('productId', this.id);
+    this.formData.append('discount', this.addProductForm.controls.discount.value);
+    this.formData.append('description', this.addProductForm.controls.description.value);
+    this.formData.append('quantity', this.addProductForm.controls.quantity.value);
     if (this.selectedFiles) {
       for (let i = 0; i < this.selectedFiles.length; i++) {
         this.formData.append('productImage', this.selectedFiles[i]);
