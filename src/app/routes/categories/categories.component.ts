@@ -24,6 +24,7 @@ export class CategoriesComponent implements OnInit {
   columns: MtxGridColumn[] = [
     { header: 'Tên danh mục', field: 'categoryName' },
     { header: 'Hình ảnh', field: 'categoryImageUrl', type: 'image' },
+    { header: 'Trạng thái', field: 'isActive' },
     {
       header: 'Hành động',
       field: 'operation',
@@ -74,6 +75,7 @@ export class CategoriesComponent implements OnInit {
     this.isLoading = true;
     this.servicecategories.getListCategories(params).subscribe(res => {
       this.list = res.content.map(x => {
+        x.isActive = x.isActive == true ? "Đang hoạt động" : "Không hoạt động";
         x.categoryImageUrl = `data:image/png;base64,${x.categoryImageBase64}`;
         return x;
       });
