@@ -5,15 +5,6 @@ import { SettingsService } from '@core';
 @Component({
   selector: 'app-translate',
   template: `
-    <button mat-icon-button class="matero-toolbar-button" [matMenuTriggerFor]="menu">
-      <mat-icon>translate</mat-icon>
-    </button>
-
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item *ngFor="let lang of langs | keyvalue" (click)="useLanguage(lang.key)">
-        <span>{{ lang.value }}</span>
-      </button>
-    </mat-menu>
   `,
   styles: [],
 })
