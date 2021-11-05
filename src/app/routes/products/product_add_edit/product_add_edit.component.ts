@@ -86,7 +86,10 @@ export class ProductAddEditComponent implements OnInit {
   }
 
   getListCategories() {
-    this.categoryService.getListCategories().subscribe(res => {
+    let params = {
+      size: 5000
+    }
+    this.categoryService.getListCategories(params).subscribe(res => {
       this.listCategory = res.content;
     })
   }
