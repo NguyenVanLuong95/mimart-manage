@@ -76,6 +76,9 @@ export class ProductAddEditComponent implements OnInit {
       this.addProductForm.controls['building'].setValue(1);
       this.addProductForm.controls['story'].setValue(1);
       this.addProductForm.controls['isActive'].setValue(this.isActive[0])
+      this.addProductForm.controls['discount'].setValue(0);
+      this.addProductForm.controls['quantity'].setValue(0);
+      this.addProductForm.controls['unitPrice'].setValue(0);
     }
   }
 
