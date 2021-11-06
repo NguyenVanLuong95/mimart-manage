@@ -73,7 +73,7 @@ export class ProductAddEditComponent implements OnInit {
     } else {
       this.checkForm = false;
       this.addProductForm.controls['category'].setValue(1);
-      this.addProductForm.controls['building'].setValue(1);
+      this.addProductForm.controls['building'].setValue(2);
       this.addProductForm.controls['story'].setValue(1);
       this.addProductForm.controls['isActive'].setValue(this.isActive[0])
       this.addProductForm.controls['discount'].setValue(0);
