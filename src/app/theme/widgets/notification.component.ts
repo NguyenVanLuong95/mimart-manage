@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { OrdersService } from 'app/routes/orders/orders.service';
+import { ToastrService } from 'ngx-toastr';
 import { interval, Subscription } from 'rxjs';
 
 @Component({
@@ -23,22 +24,31 @@ import { interval, Subscription } from 'rxjs';
   `,
 })
 export class NotificationComponent {
+  audio = new Audio('./assets/sound/toast_sound.mp3');
   messages = [];
   count!: number;
   minutes!: number;
   @Input()
   intervalPeriod!: number;
   subscription!: Subscription;
-  constructor(private orderService: OrdersService) { }
+  constructor(private orderService: OrdersService, private toastr: ToastrService) { }
   ngOnInit(): void {
     this.subscription = interval(30000).subscribe((x => {
       this.getNotifications();
     }));
   }
 
+  onBeforeOpen() {
+    this.audio.play();
+    this.toastr.warning("Bạn có đơn hàng mới đặt!");
+  }
+
   getNotifications() {
     this.orderService.getListNewOrders().subscribe(res => {
       this.count = res.content.length;
+      if (this.count > 0) {
+        this.onBeforeOpen();
+      }
       this.messages = res.content.map(x => x.orderCode);
     })
   }
