@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
 import * as moment from 'moment';
@@ -48,6 +48,8 @@ export class ShippingComponent implements OnInit {
   ngOnInit(): void {
     this.shippingForm = this.fb.group({
       code: [''],
+      username: [''],
+      phone: ['', [Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]]
     });
     this.getListShippingOrders();
   }
@@ -63,6 +65,12 @@ export class ShippingComponent implements OnInit {
     params.size = this.query.size;
     if (!this.shippingForm.controls['code'].value) {
       delete params.code;
+    }
+    if (!this.shippingForm.controls['username'].value) {
+      delete params.username;
+    }
+    if (!this.shippingForm.controls['phone'].value) {
+      delete params.phone;
     }
     this.isLoading = true;
     this.serviceOrders.getListShippingOrders(params).subscribe((res: any) => {
