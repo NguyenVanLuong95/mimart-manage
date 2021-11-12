@@ -48,7 +48,7 @@ export class ShippingComponent implements OnInit {
   ngOnInit(): void {
     this.shippingForm = this.fb.group({
       code: [''],
-      username: [''],
+      customerName: [''],
       phone: ['', [Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]]
     });
     this.getListShippingOrders();
@@ -66,8 +66,8 @@ export class ShippingComponent implements OnInit {
     if (!this.shippingForm.controls['code'].value) {
       delete params.code;
     }
-    if (!this.shippingForm.controls['username'].value) {
-      delete params.username;
+    if (!this.shippingForm.controls['customerName'].value) {
+      delete params.customerName;
     }
     if (!this.shippingForm.controls['phone'].value) {
       delete params.phone;
