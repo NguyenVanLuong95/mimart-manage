@@ -53,11 +53,16 @@ export class CategoryAddEditComponent implements OnInit {
   onChangeFileInput(): void {
     const files: { [key: string]: File } = this.fileInput.nativeElement.files;
     this.file = files[0];
-    const reader = new FileReader();
-    reader.onload = e => this.imageSrc = reader.result;
-    reader.readAsDataURL(this.file);
-    if (this.file) {
-      this.showImage = false;
+    if (this.file.size > 300000) {
+      this.toastr.error("Không được chọn ảnh có dung lượng lớn hơn 300KB");
+      this.addCategoryForm.controls['categoryImage'].setValue(null);
+    } else {
+      const reader = new FileReader();
+      reader.onload = e => this.imageSrc = reader.result;
+      reader.readAsDataURL(this.file);
+      if (this.file) {
+        this.showImage = false;
+      }
     }
   }
 
