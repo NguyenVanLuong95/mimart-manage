@@ -26,6 +26,7 @@ export class ProductAddEditComponent implements OnInit {
   arrImageSrc: string[] = [];
   showImage = true;
   isActive = ['Đang hoạt động', 'Không hoạt động'];
+  flag: boolean = true;
 
   constructor(
     private fb: FormBuilder,
@@ -112,7 +113,9 @@ export class ProductAddEditComponent implements OnInit {
     this.formData.append('quantity', this.addProductForm.controls.quantity.value);
     if (this.selectedFiles) {
       for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.formData.append('productImage', this.selectedFiles[i]);
+        if (this.selectedFiles[i].size <= 300000) {
+          this.formData.append('productImage', this.selectedFiles[i]);
+        }
       }
     }
     let isActive;
@@ -140,7 +143,9 @@ export class ProductAddEditComponent implements OnInit {
     this.formData.append('quantity', this.addProductForm.controls.quantity.value);
     if (this.selectedFiles) {
       for (let i = 0; i < this.selectedFiles.length; i++) {
-        this.formData.append('productImage', this.selectedFiles[i]);
+        if (this.selectedFiles[i].size <= 300000) {
+          this.formData.append('productImage', this.selectedFiles[i]);
+        }
       }
     }
     let isActive;
@@ -168,13 +173,24 @@ export class ProductAddEditComponent implements OnInit {
       this.showImage = false;
     }
     for (let i = 0; i < this.selectedFiles.length; i++) {
-      const reader = new FileReader();
-      reader.onload = (event: any) => {
-        if (event.target.result) {
-          this.arrImageSrc.push(event.target.result);
-        }
+      if (this.selectedFiles[i].size > 300000) {
+        this.toastr.error("Không được chọn ảnh có dung lượng lớn hơn 300KB");
+        this.addProductForm.controls['productImage'].setValue(null);
+        this.flag = false;
+      } else {
+        this.flag = true;
       }
-      reader.readAsDataURL(this.selectedFiles[i]);
+    }
+    if (this.flag == true) {
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        const reader = new FileReader();
+        reader.onload = (event: any) => {
+          if (event.target.result) {
+            this.arrImageSrc.push(event.target.result);
+          }
+        }
+        reader.readAsDataURL(this.selectedFiles[i]);
+      }
     }
   }
 }
