@@ -75,39 +75,17 @@
 </form>
 
 <mat-card>
-  <mat-card-title>Báo cáo doanh thu {{ storyName ? storyName : '' }}</mat-card-title>
-  <mat-table
-    aria-readonly="true"
-    [dataSource]="listReport"
-    aria-label="Users favorite colors and age"
+  <mat-card-title>Báo cáo doanh thu</mat-card-title>
+  <mtx-grid
+    [data]="listReport"
+    [columns]="columns"
+    [length]="total"
+    [loading]="isLoading"
+    [pageOnFront]="false"
+    [pageIndex]="query.page"
+    [pageSize]="query.size"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="getNextPage($event)"
   >
-    <ng-container cdkColumnDef="productName">
-      <mat-header-cell *cdkHeaderCellDef>Tên sản phẩm</mat-header-cell>
-      <mat-cell *cdkCellDef="let row">{{ row.productName }}</mat-cell>
-    </ng-container>
-    <ng-container cdkColumnDef="unitPrice">
-      <mat-header-cell *cdkHeaderCellDef>Giá sản phẩm</mat-header-cell>
-      <mat-cell *cdkCellDef="let row">{{ row.unitPrice }}</mat-cell>
-    </ng-container>
-    <ng-container cdkColumnDef="inventoryQuantity">
-      <mat-header-cell *cdkHeaderCellDef>Lượng tồn kho</mat-header-cell>
-      <mat-cell *cdkCellDef="let row"
-        >{{ row.inventoryQuantity ? row.inventoryQuantity : '' }}
-      </mat-cell>
-    </ng-container>
-    <ng-container cdkColumnDef="discount">
-      <mat-header-cell *cdkHeaderCellDef>Khuyến mại</mat-header-cell>
-      <mat-cell *cdkCellDef="let row">{{ row.discount ? row.discount : '' }}</mat-cell>
-    </ng-container>
-    <ng-container cdkColumnDef="soldQuantity">
-      <mat-header-cell *cdkHeaderCellDef>Số lượng đã bán</mat-header-cell>
-      <mat-cell *cdkCellDef="let row">{{ row.soldQuantity ? row.soldQuantity : '' }}</mat-cell>
-    </ng-container>
-    <ng-container cdkColumnDef="revenue">
-      <mat-header-cell *cdkHeaderCellDef>Doanh thu</mat-header-cell>
-      <mat-cell *cdkCellDef="let row">{{ row.revenue ? row.revenue : '' }}</mat-cell>
-    </ng-container>
-    <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *cdkRowDef="let row; columns: displayedColumns"></mat-row>
-  </mat-table>
+  </mtx-grid>
 </mat-card>
