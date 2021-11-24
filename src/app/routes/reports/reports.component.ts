@@ -4,6 +4,8 @@ import { ReportsService } from './reports.service';
 import { Moment } from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { CategoriesService } from '../categories/categories.service';
+import { PageEvent } from '@angular/material/paginator';
+import { MtxGridColumn } from '@ng-matero/extensions';
 @Component({
   selector: 'app-reports',
   templateUrl: './reports.component.html',
@@ -11,13 +13,25 @@ import { CategoriesService } from '../categories/categories.service';
 export class ReportsComponent implements OnInit {
   listStories: any;
   listReport: any;
-  storyName!: string;
   listCategory: any;
+  total = 0;
+  isLoading = true;
   reportForm = new FormGroup({});
   pdfSrc = {}
   FileSaver = require('file-saver');
   fileExtension = '.xlsx';
-  displayedColumns = ['productName', 'unitPrice', 'inventoryQuantity', 'discount', 'soldQuantity', 'revenue'];
+  query = {
+    page: 0,
+    size: 10,
+  };
+  columns: MtxGridColumn[] = [
+    { header: 'Tên sản phẩm', field: 'productName' },
+    { header: 'Giá sản phẩm', field: 'unitPrice' },
+    { header: 'Lượng tồn kho', field: 'inventoryQuantity' },
+    { header: 'Khuyến mại', field: 'discount' },
+    { header: 'Số lượng đã bán', field: 'soldQuantity' },
+    { header: 'Doanh thu', field: 'revenue' },
+  ];
   constructor(
     private reportService: ReportsService,
     private fb: FormBuilder,
@@ -34,9 +48,6 @@ export class ReportsComponent implements OnInit {
     this.getListStories();
     this.getListCategories();
     this.reportForm.controls['story'].setValue(1);
-    if (this.listStories) {
-      this.storyName = this.listStories.find(x => x.id == 1).name;
-    }
   }
 
   getListStories() {
@@ -49,6 +60,11 @@ export class ReportsComponent implements OnInit {
     this.categoryService.getListCategories().subscribe(res => {
       this.listCategory = res.content;
     })
+  }
+
+  get params() {
+    const p = Object.assign({}, this.query);
+    return p;
   }
 
   getReport() {
@@ -80,18 +96,24 @@ export class ReportsComponent implements OnInit {
 
     if (categoryId) {
       params = {
+        categoryId: categoryId,
+        page: this.query.page,
+        size: this.query.size,
         dateFrom: dateFrom,
-        dateTo: dateTo,
-        categoryId: categoryId
+        dateTo: dateTo
       }
     } else {
       params = {
+        page: this.query.page,
+        size: this.query.size,
         dateFrom: dateFrom,
         dateTo: dateTo
       }
     }
     this.reportService.getReport(storyId, params).subscribe(res => {
       this.listReport = res.content;
+      this.total = res.totalElements;
+      this.isLoading = false;
     })
   }
   exportExcel() {
@@ -123,12 +145,14 @@ export class ReportsComponent implements OnInit {
 
     if (categoryId) {
       params = {
+        categoryId: categoryId,
+        size: this.total,
         dateFrom: dateFrom,
-        dateTo: dateTo,
-        categoryId: categoryId
+        dateTo: dateTo
       }
     } else {
       params = {
+        size: this.total,
         dateFrom: dateFrom,
         dateTo: dateTo
       }
@@ -141,5 +165,11 @@ export class ReportsComponent implements OnInit {
         this.FileSaver.saveAs(this.pdfSrc, Date.now() + '_' + this.fileExtension);
       };
     })
+  }
+
+  getNextPage(e: PageEvent) {
+    this.query.page = e.pageIndex;
+    this.query.size = e.pageSize;
+    this.getReport();
   }
 }
