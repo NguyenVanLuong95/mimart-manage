@@ -1,0 +1,134 @@
+<mat-card *ngIf="!checkForm">
+  <mat-card-title>Thêm mới danh mục</mat-card-title>
+
+  <form [formGroup]="addCategoryForm">
+    <div fxLayout="row wrap" class="matero-row">
+      <div fxFlex="50" fxFlex.lt-sm="100">
+        <mat-form-field class="m-r-8">
+          <input
+            matInput
+            placeholder="Tên danh mục"
+            formControlName="categoryName"
+            name="categoryName"
+          />
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" fxFlex.lt-sm="100">
+        <mat-form-field>
+          <mat-select formControlName="isActive" placeholder="Trạng thái">
+            <mat-option *ngFor="let item of isActive" [value]="item"> {{ item }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row wrap" class="matero-row">
+      <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
+        <input
+          type="file"
+          #fileInput
+          accept="image/*"
+          formControlName="categoryImage"
+          (change)="onChangeFileInput()"
+          class="custom-file-upload"
+        />
+        <img
+          id="blah"
+          [src]="imageSrc"
+          width="150"
+          height="150"
+          *ngIf="!showImage"
+          style="position: relative; top: 10px"
+        />
+        <span style="color: red; font-size: small; position: relative; top: 10px" *ngIf="showImage"
+          >Chọn ảnh danh mục</span
+        >
+      </div>
+    </div>
+
+    <div fxLayout="row wrap" class="matero-row" style="margin-top: 1%">
+      <div fxFlex="66.67" fxFlex.lt-sm="100" class="matero-col"></div>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onSave()"
+        [disabled]="addCategoryForm.invalid"
+      >
+        Lưu
+      </button>
+      <button mat-raised-button color="primary" (click)="onClose()" style="margin-left: 2%">
+        Đóng
+      </button>
+    </div>
+  </form>
+</mat-card>
+
+<mat-card *ngIf="checkForm">
+  <mat-card-title>Cập nhật danh mục</mat-card-title>
+
+  <form [formGroup]="addCategoryForm">
+    <div fxLayout="row wrap" class="matero-row">
+      <div fxFlex="50" fxFlex.lt-sm="100">
+        <mat-form-field class="m-r-8">
+          <input
+            matInput
+            placeholder="Tên danh mục"
+            formControlName="categoryName"
+            name="categoryName"
+          />
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" fxFlex.lt-sm="100">
+        <mat-form-field>
+          <mat-select required formControlName="isActive" placeholder="Trạng thái">
+            <mat-option *ngFor="let item of isActive" [value]="item"> {{ item }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="row wrap" class="matero-row">
+      <div fxFlex="33.33" fxFlex.lt-sm="100" class="matero-col">
+        <img
+          [src]="imagePath"
+          width="150"
+          height="150"
+          *ngIf="showImage"
+          style="margin-bottom: 5%"
+        />
+        <img
+          id="blah"
+          [src]="imageSrc"
+          width="150"
+          height="150"
+          *ngIf="!showImage"
+          style="margin-bottom: 5%"
+        />
+        <input
+          type="file"
+          #fileInput
+          accept="image/*"
+          formControlName="categoryImage"
+          (change)="onChangeFileInput()"
+          class="custom-file-upload"
+        />
+        <span style="color: red; font-size: small; position: relative; top: 10px" *ngIf="showImage"
+          >Cập nhật ảnh danh mục</span
+        >
+      </div>
+    </div>
+
+    <div fxLayout="row wrap" class="matero-row" style="margin-top: 1%">
+      <div fxFlex="66.67" fxFlex.lt-sm="100" class="matero-col"></div>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="onSaveEdit()"
+        [disabled]="addCategoryForm.invalid"
+      >
+        Lưu
+      </button>
+      <button mat-raised-button color="primary" (click)="onClose()" style="margin-left: 2%">
+        Đóng
+      </button>
+    </div>
+  </form>
+</mat-card>

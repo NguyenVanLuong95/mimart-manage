@@ -1,0 +1,30 @@
+<page-header></page-header>
+
+<div fxLayout="row wrap" class="matero-row">
+  <div fxFlex="100" class="matero-col">
+    <mat-card>
+      <mat-card-title>Thông tin tìm kiếm</mat-card-title>
+
+      <form [formGroup]="categoriesForm">
+        <mat-form-field class="m-r-8">
+          <input matInput placeholder="Tên danh mục" formControlName="name" name="name" />
+        </mat-form-field>
+        <button mat-raised-button color="primary" (click)="search()">Tìm kiếm</button>
+        <button mat-raised-button color="primary" style="margin-left: 1%;" (click)="addCategory()">Thêm mới</button>
+      </form>
+    </mat-card>
+    <mat-card>
+      <mtx-grid
+                [data]="list"
+                [columns]="columns"
+                [length]="total"
+                [loading]="isLoading"
+                [pageOnFront]="false"
+                [pageIndex]="query.page"
+                [pageSize]="query.size"
+                [pageSizeOptions]="[5, 10, 20]"
+                (page)="getNextPage($event)">
+      </mtx-grid>
+    </mat-card>
+  </div>
+</div>

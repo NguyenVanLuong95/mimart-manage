@@ -1,0 +1,33 @@
+<mat-card>
+  <mat-card-title>Chi Tiết Đơn Hàng</mat-card-title>
+  <mat-table aria-readonly="true"
+             [dataSource]="list"
+             aria-label="Users favorite colors and age">
+    <ng-container cdkColumnDef="productName">
+      <mat-header-cell *cdkHeaderCellDef>Tên sản phẩm</mat-header-cell>
+      <mat-cell *cdkCellDef="let row;">{{row.productName}}</mat-cell>
+    </ng-container>
+    <ng-container cdkColumnDef="quantity">
+      <mat-header-cell *cdkHeaderCellDef>Số lượng</mat-header-cell>
+      <mat-cell *cdkCellDef="let row;">{{row.quantity}}</mat-cell>
+    </ng-container>
+    <ng-container cdkColumnDef="productImageUrl">
+      <mat-header-cell *cdkHeaderCellDef>Hình ảnh</mat-header-cell>
+      <mat-cell *cdkCellDef="let row;"><img [src]="row.productImageUrl"
+             style="height: 40px;width: 40px;" /></mat-cell>
+    </ng-container>
+    <ng-container cdkColumnDef="amount">
+      <mat-header-cell *cdkHeaderCellDef>Tổng giá</mat-header-cell>
+      <mat-cell *cdkCellDef="let row;">{{row.amount}}</mat-cell>
+    </ng-container>
+    <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <div fxLayout="row wrap" class="matero-row" style="margin-top: 1%;">
+    <button mat-raised-button color="primary" (click)="onSend()"
+            style="margin-left: 1%;">Xác nhận đang giao</button>
+    <button mat-raised-button color="primary" (click)="onClose()"
+            style="margin-left: 1%;">Đóng</button>
+  </div>
+</mat-card>

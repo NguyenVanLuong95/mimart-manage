@@ -1,0 +1,68 @@
+{
+  "menu": [
+    {
+      "route": "users",
+      "name": "users",
+      "type": "link",
+      "icon": "supervised_user_circle"
+    },
+    {
+      "route": "categories",
+      "name": "categories",
+      "type": "link",
+      "icon": "category"
+    },
+    {
+      "route": "products",
+      "name": "products",
+      "type": "link",
+      "icon": "phone_iphone"
+    },
+    {
+      "route": "notifications",
+      "name": "notifications",
+      "type": "link",
+      "icon": "notifications"
+    },
+    {
+      "route": "orders",
+      "name": "orders",
+      "type": "sub",
+      "icon": "shopping_cart",
+      "children": [
+        {
+          "route": "new-orders",
+          "name": "new-orders",
+          "type": "link"
+        },
+        {
+          "route": "shipping",
+          "name": "shipping",
+          "type": "link"
+        },
+        {
+          "route": "shipped",
+          "name": "shipped",
+          "type": "link"
+        },
+        {
+          "route": "canceled",
+          "name": "canceled",
+          "type": "link"
+        }
+      ]
+    },
+    {
+      "route": "warehouses",
+      "name": "warehouses",
+      "type": "link",
+      "icon": "list_alt"
+    },
+    {
+      "route": "reports",
+      "name": "reports",
+      "type": "link",
+      "icon": "format_align_justify"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+<page-header></page-header>
+
+<form [formGroup]="reportForm">
+  <div fxLayout="row wrap" class="matero-row">
+    <div fxFlex="50" fxFlex.lt-sm="100">
+      <div fxFlex="50" fxFlex.lt-sm="100">
+        <mat-form-field>
+          <mat-select formControlName="story" placeholder="Cửa hàng">
+            <mat-option *ngFor="let item of listStories" [value]="item.id">
+              {{ item.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" fxFlex.lt-sm="100">
+        <mat-form-field>
+          <mat-select formControlName="category" placeholder="Danh mục">
+            <mat-option>--Tất cả--</mat-option>
+            <mat-option *ngFor="let item of listCategory" [value]="item.id">
+              {{ item.categoryName }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row wrap" class="matero-row">
+    <div fxFlex="50" fxFlex.lt-sm="100">
+      <div fxFlex="50" fxFlex.lt-sm="100">
+        <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="startPicker"
+            placeholder="Từ ngày"
+            formControlName="dateFrom"
+          />
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxFlex="50" fxFlex.lt-sm="100">
+        <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="endPicker"
+            placeholder="Đến ngày"
+            formControlName="dateTo"
+          />
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <button
+    mat-raised-button
+    color="primary"
+    class="m-t-8"
+    style="margin-bottom: 1%"
+    (click)="getReport()"
+    [disabled]="reportForm.invalid"
+  >
+    Tìm kiếm
+  </button>
+  <button
+    mat-raised-button
+    color="primary"
+    class="m-t-8"
+    style="margin-bottom: 1%; margin-left: 1%"
+    (click)="exportExcel()"
+    [disabled]="reportForm.invalid"
+  >
+    Xuất excel
+  </button>
+</form>
+
+<mat-card>
+  <mat-card-title>Báo cáo doanh thu</mat-card-title>
+  <mtx-grid
+    [data]="listReport"
+    [columns]="columns"
+    [length]="total"
+    [loading]="isLoading"
+    [pageOnFront]="false"
+    [pageIndex]="query.page"
+    [pageSize]="query.size"
+    [pageSizeOptions]="[5, 10, 20]"
+    (page)="getNextPage($event)"
+  >
+  </mtx-grid>
+</mat-card>
