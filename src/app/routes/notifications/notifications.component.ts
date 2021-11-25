@@ -80,7 +80,7 @@ export class NotificationsComponent implements OnInit {
     this.isLoading = true;
     this.serviceNotifications.getListNotifications(params).subscribe((res: any) => {
       this.list = res.content.map(x => {
-        x.createAt = moment(x.createAt).format('hh:mm:ss DD/MM/YYYY');
+        x.createAt = moment(x.createAt).format('HH:mm:ss DD/MM/YYYY');
         return x;
       });
       this.total = res.totalElements;

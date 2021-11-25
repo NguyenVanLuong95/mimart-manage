@@ -50,7 +50,7 @@ export class CanceledComponent implements OnInit {
     this.isLoading = true;
     this.serviceOrders.getListCanceledOrders(params).subscribe((res: any) => {
       this.list = res.content.map(x => {
-        x.createdDate = moment(x.createdDate).format('hh:mm:ss DD/MM/YYYY');
+        x.createdDate = moment(x.createdDate).format('HH:mm:ss DD/MM/YYYY');
         return x;
       });
       this.total = res.totalElements;
