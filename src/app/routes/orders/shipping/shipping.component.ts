@@ -76,7 +76,7 @@ export class ShippingComponent implements OnInit {
     this.serviceOrders.getListShippingOrders(params).subscribe((res: any) => {
       this.list = res.content.map(x => {
         if (x.createdDate) {
-          x.createdDate = moment(x.createdDate).format('hh:mm:ss DD/MM/YYYY');
+          x.createdDate = moment(x.createdDate).format('HH:mm:ss DD/MM/YYYY');
         }
         return x;
       });
