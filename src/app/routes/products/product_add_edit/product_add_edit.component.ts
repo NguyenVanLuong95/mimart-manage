@@ -50,6 +50,7 @@ export class ProductAddEditComponent implements OnInit {
       description: [''],
       quantity: ['', Validators.required],
       isActive: ['', Validators.required],
+      entryPrice: ['', Validators.required]
     });
     this.getListCategories();
     this.getAllBuildings();
@@ -65,6 +66,7 @@ export class ProductAddEditComponent implements OnInit {
       this.addProductForm.controls['discount'].setValue(this.data.record.discount);
       this.addProductForm.controls['description'].setValue(this.data.record.description);
       this.addProductForm.controls['quantity'].setValue(this.data.record.quantity);
+      this.addProductForm.controls['entryPrice'].setValue(this.data.record.entryPrice);
       this.productImageBase64 = this.data.record.productImageBase64;
       this.productImageBase64 = this.productImageBase64.map(x => {
         x = `data:image/png;base64,${x}`;
@@ -80,6 +82,7 @@ export class ProductAddEditComponent implements OnInit {
       this.addProductForm.controls['discount'].setValue(0);
       this.addProductForm.controls['quantity'].setValue(0);
       this.addProductForm.controls['unitPrice'].setValue(0);
+      this.addProductForm.controls['entryPrice'].setValue(0);
     }
   }
 
@@ -111,6 +114,7 @@ export class ProductAddEditComponent implements OnInit {
     this.formData.append('discount', this.addProductForm.controls.discount.value);
     this.formData.append('description', this.addProductForm.controls.description.value);
     this.formData.append('quantity', this.addProductForm.controls.quantity.value);
+    this.formData.append('entryPrice', this.addProductForm.controls.entryPrice.value);
     if (this.selectedFiles) {
       for (let i = 0; i < this.selectedFiles.length; i++) {
         if (this.selectedFiles[i].size <= 300000) {
@@ -141,6 +145,7 @@ export class ProductAddEditComponent implements OnInit {
     this.formData.append('discount', this.addProductForm.controls.discount.value);
     this.formData.append('description', this.addProductForm.controls.description.value);
     this.formData.append('quantity', this.addProductForm.controls.quantity.value);
+    this.formData.append('entryPrice', this.addProductForm.controls.entryPrice.value);
     if (this.selectedFiles) {
       for (let i = 0; i < this.selectedFiles.length; i++) {
         if (this.selectedFiles[i].size <= 300000) {
