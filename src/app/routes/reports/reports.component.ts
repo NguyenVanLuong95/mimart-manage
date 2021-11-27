@@ -30,6 +30,7 @@ export class ReportsComponent implements OnInit {
     { header: 'Lượng tồn kho', field: 'inventoryQuantity' },
     { header: 'Khuyến mại', field: 'discount' },
     { header: 'Số lượng đã bán', field: 'soldQuantity' },
+    { header: 'Giá nhập', field: 'entryPrice' },
     { header: 'Doanh thu', field: 'revenue' },
   ];
   constructor(
