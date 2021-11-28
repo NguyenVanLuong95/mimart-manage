@@ -61,8 +61,10 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
     this.productsForm = this.fb.group({
       productName: [''],
+      productType: ['']
     });
     this.getListProducts();
+    this.productsForm.controls.productType.setValue(0);
   }
 
   get params() {
@@ -76,6 +78,9 @@ export class ProductsComponent implements OnInit {
     params.size = this.query.size;
     if (!this.productsForm.controls['productName'].value) {
       delete params.productName;
+    }
+    if (!this.productsForm.controls['productType'].value) {
+      params.productType = 0;
     }
     this.isLoading = true;
     this.serviceProducts.getListProducts(params).subscribe(res => {

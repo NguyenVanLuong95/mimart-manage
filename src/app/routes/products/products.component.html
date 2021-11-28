@@ -4,26 +4,46 @@
       <mat-card-title>Thông tin tìm kiếm</mat-card-title>
 
       <form [formGroup]="productsForm">
-        <mat-form-field class="m-r-8">
-          <input matInput placeholder="Danh mục hoặc sản phẩm" formControlName="productName"
-                 name="productName" />
-        </mat-form-field>
+        <div fxLayout="row wrap" class="matero-row">
+          <div fxFlex="50" fxFlex.lt-sm="100" class="matero-col">
+            <mat-form-field class="m-r-8">
+              <input
+                matInput
+                placeholder="Danh mục hoặc sản phẩm"
+                formControlName="productName"
+                name="productName"
+              />
+            </mat-form-field>
+          </div>
+          <div fxFlex="50" fxFlex.lt-sm="100" class="matero-col">
+            <mat-form-field>
+              <mat-label>Trạng thái sản phẩm</mat-label>
+              <mat-select formControlName="productType">
+                <mat-option [value]="0">--Tất cả--</mat-option>
+                <mat-option [value]="1">Sắp hết hàng</mat-option>
+                <mat-option [value]="2">Hết hàng</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
         <button mat-raised-button color="primary" (click)="search()">Tìm kiếm</button>
-        <button mat-raised-button color="primary" style="margin-left: 1%;"
-                (click)="addProduct()">Thêm mới</button>
+        <button mat-raised-button color="primary" style="margin-left: 1%" (click)="addProduct()">
+          Thêm mới
+        </button>
       </form>
     </mat-card>
     <mat-card>
       <mtx-grid
-                [data]="list"
-                [columns]="columns"
-                [length]="total"
-                [loading]="isLoading"
-                [pageOnFront]="false"
-                [pageIndex]="query.page"
-                [pageSize]="query.size"
-                [pageSizeOptions]="[5, 10, 20]"
-                (page)="getNextPage($event)">
+        [data]="list"
+        [columns]="columns"
+        [length]="total"
+        [loading]="isLoading"
+        [pageOnFront]="false"
+        [pageIndex]="query.page"
+        [pageSize]="query.size"
+        [pageSizeOptions]="[5, 10, 20]"
+        (page)="getNextPage($event)"
+      >
       </mtx-grid>
     </mat-card>
   </div>
