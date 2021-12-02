@@ -75,6 +75,17 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <div fxFlex="50" fxFlex.lt-sm="100" class="matero-col">
+        <mat-form-field class="m-r-8">
+          <input
+            matInput
+            type="number"
+            placeholder="Giá nhập sản phẩm"
+            formControlName="entryPrice"
+            name="entryPrice"
+          />
+        </mat-form-field>
+      </div>
     </div>
     <div fxLayout="row wrap" class="matero-row">
       <div fxFlex="50" fxFlex.lt-sm="100">
@@ -91,7 +102,7 @@
     <div fxLayout="row wrap" class="matero-row">
       <div fxFlex="100" fxFlex.lt-sm="100" class="matero-col">
         <mat-form-field class="m-r-8" [style.width.%]="75">
-          <textarea 
+          <textarea
                  matInput
                  placeholder="Mô tả"
                  formControlName="description"
@@ -99,7 +110,7 @@
         </mat-form-field>
       </div>
     </div>
-    
+
     <div fxLayout="row wrap" class="matero-row">
       <div fxFlex="50" fxFlex.lt-sm="100" class="matero-col">
         <input
@@ -221,6 +232,17 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <div fxFlex="50" fxFlex.lt-sm="100" class="matero-col">
+        <mat-form-field class="m-r-8">
+          <input
+            matInput
+            type="number"
+            placeholder="Giá nhập sản phẩm"
+            formControlName="entryPrice"
+            name="entryPrice"
+          />
+        </mat-form-field>
+      </div>
     </div>
     <div fxLayout="row wrap" class="matero-row">
       <div fxFlex="50" fxFlex.lt-sm="100">
@@ -237,11 +259,11 @@
     <div fxLayout="row wrap" class="matero-row">
       <div fxFlex="100" fxFlex.lt-sm="100" class="matero-col">
         <mat-form-field class="m-r-8" [style.width.%]="75">
-          <textarea 
+          <textarea
                  matInput
                  placeholder="Mô tả"
                  formControlName="description"
-                 name="description" 
+                 name="description"
                  >{item.description}</textarea>
         </mat-form-field>
       </div>
