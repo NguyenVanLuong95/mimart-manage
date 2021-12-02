@@ -29,6 +29,7 @@ export class ProductsComponent implements OnInit {
     { header: 'Tòa nhà', field: 'buildingName' },
     { header: 'Cửa hàng', field: 'storeName' },
     { header: 'Trạng thái', field: 'isActive' },
+    { header: 'Ghi chú', field: 'note' },
     {
       header: 'Hành động',
       field: 'operation',
