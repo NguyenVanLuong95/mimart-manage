@@ -5,6 +5,7 @@ import { MtxDialog, MtxGridColumn } from '@ng-matero/extensions';
 import * as moment from 'moment';
 import { OrdersService } from '../orders.service';
 import { ShippingDetailComponent } from '../shipping-detail/shipping-detail.component';
+import { ViewPdfComponent } from '../view-pdf/view-pdf.component';
 
 @Component({
   selector: 'app-orders-shipping',
@@ -19,6 +20,8 @@ export class ShippingComponent implements OnInit {
     page: 0,
     size: 10,
   };
+  FileSaver = require('file-saver');
+  pdfSrc = {}
   columns: MtxGridColumn[] = [
     { header: 'Tên khách hàng', field: 'customerName' },
     { header: 'Địa chỉ', field: 'customerAdrress' },
@@ -40,6 +43,18 @@ export class ShippingComponent implements OnInit {
           icon: 'remove_red_eye',
           tooltip: 'Sửa',
           click: record => this.edit(record),
+        },
+        {
+          type: 'icon',
+          icon: 'panorama_fish_eye',
+          tooltip: 'Xem hóa đơn',
+          click: record => this.viewBill(record),
+        },
+        {
+          type: 'icon',
+          icon: 'cloud_download',
+          tooltip: 'Tải hóa đơn',
+          click: record => this.downloadBill(record),
         },
       ],
     },
@@ -104,5 +119,33 @@ export class ShippingComponent implements OnInit {
       data: { record: value.productList, orderId: value.billId },
     });
     dialogRef.afterClosed().subscribe(() => { this.getListShippingOrders(); });
+  }
+
+  viewBill(value: any) {
+    if (value.billId) {
+      this.serviceOrders.viewBill(value.billId).subscribe(res => {
+        const reader = new FileReader();
+        const binaryString = reader.readAsDataURL(res);
+        reader.onload = (event: any) => {
+          this.pdfSrc = event.target.result;
+          const dialogRef = this.dialog.originalOpen(ViewPdfComponent, {
+            width: '600px',
+            data: { pdf_Src: this.pdfSrc },
+          });
+        };
+      })
+    }
+  }
+  downloadBill(value: any) {
+    if (value.billId) {
+      this.serviceOrders.viewBill(value.billId).subscribe(res => {
+        const reader = new FileReader();
+        const binaryString = reader.readAsDataURL(res);
+        reader.onload = (event: any) => {
+          this.pdfSrc = event.target.result;
+          this.FileSaver.saveAs(this.pdfSrc, value.customerName + '_' + value.orderCode);
+        };
+      })
+    }
   }
 }
