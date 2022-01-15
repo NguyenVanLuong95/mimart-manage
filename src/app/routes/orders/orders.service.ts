@@ -29,4 +29,7 @@ export class OrdersService {
   viewBill(id: Number): any {
     return this.http.get(`${baseUrl.baseUrl}/api/billing-preview/${id}`, {responseType:'blob'});
   }
+  getMessages(): Observable<any> {
+    return this.http.get<any>(`${baseUrl.baseUrl}/api/get-msnt-count-admin`);
+  }
 }
